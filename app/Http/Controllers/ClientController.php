@@ -191,7 +191,7 @@ class ClientController extends Controller
             if($user->foto) {
                 Storage::delete($user->foto);
             }
-            $insert_user['image'] = $request->file('image')->store('post-image');
+            $insert_user['foto'] = $request->file('foto')->store('user');
         }
         
         User::where('id',$user->id)->update($insert_user);

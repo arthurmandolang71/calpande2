@@ -20,7 +20,6 @@ return new class extends Migration
             $table->foreignUuid('agama_id');
             $table->string('alamat')->nullable();
             //info kontak
-            $table->string('email')->nullable();
             $table->string('no_hp')->nullable();
             $table->string('no_wa')->nullable();
             $table->string('foto_profil')->nullable();
@@ -28,8 +27,6 @@ return new class extends Migration
             //info analisa
             $table->string('catatan_tim');
             $table->string('catatan_koordinator')->nullable();
-            $table->string('status_penilaian');
-
             $table->timestamps();
         });
     }

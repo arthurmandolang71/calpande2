@@ -5,13 +5,16 @@ namespace App\Http\Controllers;
 use App\Models\Tps;
 use App\Models\Agama;
 use App\Models\Dpt2020;
+use App\Models\Pemilih;
 use App\Models\Wilayah;
 use App\Models\Lingkungan;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\PemilihClient;
 use Illuminate\Support\Carbon;
 use App\Http\Controllers\Controller;
-use App\Models\Pemilih;
-use App\Models\PemilihClient;
+use Intervention\Image\Facades\Image as ResizeImage;
+
 
 class PenjaringanController extends Controller
 {
@@ -104,63 +107,77 @@ class PenjaringanController extends Controller
     public function store(Request $request)
     {
        
-        // $validasi = [
-        //     'nik' => ['required','digits:16','numeric'],
-        //     'nkk' => ['required','digits:16','numeric'],
-        //     'alamat' => ['required'],
-        //     'no_hp' => ['required','numeric','min:9'],
-        //     'agama_id' => ['required'],
-        //     'catatan_koordinator' => ['required'],
-        // ];
+        $validasi = [
+            'nik' => ['required','digits:16','numeric'],
+            'nkk' => ['required','digits:16','numeric'],
+            'alamat' => ['required'],
+            'no_hp' => ['required','numeric','min:9'],
+            'agama_id' => ['required'],
+            'rw' => ['required','numeric'],
+            'catatan_koordinator' => ['required'],
+        ];
 
         if($request->file('ktp')){
-            $validasi['ktp'] = ['image', 'file', 'mimes:jpeg,png,jpg','max:512'];
+            $validasi['ktp'] = ['image', 'file', 'mimes:jpeg,png,jpg','max:5024'];
         }
 
-        $request->validate($validasi);
+        $validateData = $request->validate($validasi);
 
-        return dd($request);
+        $pemilih = Pemilih::where('nik',$request->input('nik'))->first();
 
-        
-        // $insert_pemilih = [
-        //     'user_id' => $request->input(''),
-        //     'nkk' => $client_id,
-        //     'no_wa' => $validateData['no_wa'],
-        //     'alamat' => $validateData['alamat'],
-        //     'keterangan' => $validateData['keterangan'],
-        //     'jenis_kelamin' => $validateData['jenis_kelamin'],
-        //     'agama_id' => $validateData['agama_id'],
-        // ];
+        if(!$pemilih) {
 
-        // $pemilih = Pemilih::create($insert_anggota_tim);
+            $dpt = Dpt2020::find($request->input('id'))->first();
+            // return $dpt;
+            $insert_pemilih = [
+                'dpt_id' => $dpt->id,
+                'agama_id' => $validateData['agama_id'],
+                'nkk' => $validateData['nkk'],
+                'nik' => $validateData['nik'],
+                'nama' => $dpt->nama,
+                'tempat_lahir' => $dpt->tempat_lahir,
+                'tanggal_lahir' => $dpt->tanggal_lahir,
+                'kawin' => $dpt->kawin,
+                'jenis_kelamin' => $dpt->jenis_kelamin,
+                'alamat' => $dpt->alamat,
+                'rt' => $dpt->rt,
+                'rw' => $validateData['rw'],
+                'wilayah_id' => $dpt->wilayah->id,  
+            ];
+    
+            $pemilih = Pemilih::create($insert_pemilih);
+        }
 
+        $path = public_path('ktp/');
+        !is_dir($path) &&
+            mkdir($path, 0777, true);
 
-        // $insert_pemilih_client = [
-        //     'client_id' => $request->session()->get('client_id'),
-        //     'user_id' => auth()->user()->id,
-        //     'pemilih_id' => $pemilih->id,
-        //     'level_status_id' => 1,
-        //     'alamat' => 1,
-        //     'email' => 1,
-        //     'no_hp' => 1,
-        //     'no_wa' => 1,
-        //     'catatan_koordinator' => 1,
-        //     'status_peniliaian' => 1,
-        // ];
+        $uuid = Str::uuid();
+        $name_ktp = $uuid . '.' . $request->ktp->extension();
+        ResizeImage::make($request->file('ktp'))
+            ->resize(600, 400)
+            ->save($path . $name_ktp);
 
-        // // upload foto
-        // if($request->file('foto')){
-        //     $insert_user['foto'] = $request->file('foto')->store('pemilih_client');
-        // } 
-        
-        // PemilihClient::create($insert_pemilih_client);
+        $insert_pemilih_client = [
+            'client_id' => auth()->user()->anggota_tim->client_id,
+            'user_id' => auth()->user()->id,
+            'pemilih_id' => $pemilih->id,
+            'level_status_id' => 1,
+            'alamat' => $validateData['alamat'] ?? NULL,
+            'no_hp' => trim($validateData['no_hp']) ?? NULL,
+            'no_wa' => trim($request->input('no_wa')) ?? NULL,
+            'catatan_koordinator' => $validateData['catatan_koordinator'],
+            'catatan_tim' => '',
+            'foto_ktp' => $name_ktp,
+        ];
 
-        
-
-        return redirect('/tim')->with('pesan','data barhasil di tambah');
+        PemilihClient::create($insert_pemilih_client);
+   
+        return redirect('/penjaringan')->with('pesan','Penjariangan berhasil dilakukan');
 
     }
 
+    
     public function print()
     {   
         if(request('kelurahan') != '') {

@@ -11,6 +11,8 @@ class PemilihClient extends Model
     use HasFactory, HasUuids;
 
     protected $table = 'pemilih_client';
+    protected $primaryKey = 'id';
+    protected $guarded = ['id'];
 
     
 }

@@ -48,7 +48,7 @@
                           <div class="row g-3">
                            
 
-                            <input type="hidden" value="{{ $dpt2020->id }}">
+                            <input type="hidden" name="id" value="{{ $dpt2020->id }}">
 
                             <div class="col-md-12">
                                 <div class="form-floating">
@@ -143,17 +143,17 @@
                                 <div class="form-floating">
                                     <input
                                         type="text"
-                                        name="rt"
-                                        class="form-control is-valid"
+                                        name="rw"
+                                        class="form-control"
                                         id="floatingInput"
                                         placeholder="Masukan nama lengkap"
                                         aria-describedby="floatingInputHelp"
                                         value="0{{ $dpt2020->rw }}"
-                                        readonly
+                                        
                                     />
-                                    <label for="floatingInput">RW</label>
+                                    <label for="floatingInput">RW / Lingkugan</label>
                                     <div id="floatingInputHelp" class="form-text">
-                                        RW
+                                        RW / Lingkugan
                                     </div>
                                 </div>
                             </div>
@@ -399,6 +399,7 @@
                                     <div class="col-md-6">
                                         <br>
                                         <img  class="img-preview img-fluid">
+                                        <img id="preview"></img>
                                     </div>
                                 </div>
                               
@@ -462,6 +463,8 @@
     }
 
 </script>
+
+
 
 
 

@@ -12,6 +12,8 @@ class Pemilih extends Model
     use HasFactory, HasUuids;
 
     protected $table = 'pemilih';
+    protected $primaryKey = 'id';
+    protected $guarded = ['id'];
 
     // protected $with = ['wilayah'];
 
