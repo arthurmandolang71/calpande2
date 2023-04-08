@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('no_hp')->nullable();
             $table->string('no_wa')->nullable();
             $table->string('foto_profil')->nullable();
-            $table->string('foto_ktp')->nullable();
+            
             //info analisa
             $table->string('catatan_tim');
             $table->string('catatan_koordinator')->nullable();

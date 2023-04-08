@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('alamat')->nullable();
             $table->string('rt')->nullable();
             $table->string('rw')->nullable();
+            $table->string('foto_ktp')->nullable();
             $table->string('wilayah_id');
             $table->timestamps();
         });

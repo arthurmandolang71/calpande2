@@ -118,7 +118,7 @@ class PenjaringanController extends Controller
         ];
 
         if($request->file('ktp')){
-            $validasi['ktp'] = ['image', 'file', 'mimes:jpeg,png,jpg','max:5024'];
+            $validasi['ktp'] = ['required','image', 'file', 'mimes:jpeg,png,jpg','max:5024'];
         }
 
         $validateData = $request->validate($validasi);
@@ -126,6 +126,16 @@ class PenjaringanController extends Controller
         $pemilih = Pemilih::where('nik',$request->input('nik'))->first();
 
         if(!$pemilih) {
+
+            $path = public_path('ktp/');
+            !is_dir($path) &&
+                mkdir($path, 0777, true);
+
+            $uuid = Str::uuid();
+            $name_ktp = $uuid . '.' . $request->ktp->extension();
+            ResizeImage::make($request->file('ktp'))
+                ->resize(600, 400)
+                ->save($path . $name_ktp);
 
             $dpt = Dpt2020::find($request->input('id'))->first();
             // return $dpt;
@@ -142,21 +152,15 @@ class PenjaringanController extends Controller
                 'alamat' => $dpt->alamat,
                 'rt' => $dpt->rt,
                 'rw' => $validateData['rw'],
+                'foto_ktp' => $name_ktp,
                 'wilayah_id' => $dpt->wilayah->id,  
+                
             ];
     
             $pemilih = Pemilih::create($insert_pemilih);
         }
 
-        $path = public_path('ktp/');
-        !is_dir($path) &&
-            mkdir($path, 0777, true);
-
-        $uuid = Str::uuid();
-        $name_ktp = $uuid . '.' . $request->ktp->extension();
-        ResizeImage::make($request->file('ktp'))
-            ->resize(600, 400)
-            ->save($path . $name_ktp);
+        
 
         $insert_pemilih_client = [
             'client_id' => auth()->user()->anggota_tim->client_id,
@@ -168,7 +172,7 @@ class PenjaringanController extends Controller
             'no_wa' => trim($request->input('no_wa')) ?? NULL,
             'catatan_koordinator' => $validateData['catatan_koordinator'],
             'catatan_tim' => '',
-            'foto_ktp' => $name_ktp,
+            
         ];
 
         PemilihClient::create($insert_pemilih_client);

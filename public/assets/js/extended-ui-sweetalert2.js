@@ -362,7 +362,7 @@
       Swal.fire({
         title: 'Auto close alert!',
         html: 'I will close in <strong></strong> seconds.',
-        timer: 2000,
+        timer: 222000,
         customClass: {
           confirmButton: 'btn btn-primary'
         },

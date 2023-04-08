@@ -398,7 +398,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <br>
-                                        <img  class="img-preview img-fluid">
+                                        <img class="img-preview img-fluid">
                                         <img id="preview"></img>
                                     </div>
                                 </div>
