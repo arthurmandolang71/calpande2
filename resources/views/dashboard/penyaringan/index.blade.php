@@ -11,15 +11,7 @@
     <!-- Basic Bootstrap Table -->
     <div class="card">
       <h5 class="card-header">List Penjaringan | total : {{ $total_get }} Pemilih </h5><!-- title -->
-    
-    @if (session()->has('pesan'))
-      <div class="container text-center">
-        <div class="alert alert-success alert-dismissible" role="alert">
-          {{ session('pesan') }}
-          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-      </div>
-    @endif
+
 
      <!-- start content -->
     <div class="container">
@@ -84,12 +76,10 @@
         <div class="col-md-2">
           <br>
           <a href="/penjaringan"><button type="button" class="btn btn-primary"><i class="tf-icons ti ti-arrow-back"></i></button></a>
-          <button type="button" id="print_pdf" class="btn btn-danger"><i class="tf-icons ti ti-file-text"></i></button>
         </div>
       </div>
     </div>
-
-  
+      
       <div class="table-responsive">
           <table class="datatables-basic table" 
           {{-- id="pemilih_tabel" --}}
@@ -102,6 +92,7 @@
                 <th>Kelurahan</th>
                 <th>Ling.</th>
                 {{-- <th>Tps</th> --}}
+                <th>Status</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -109,29 +100,24 @@
             @if($pemilih)
             @foreach ($pemilih as $item)
               <tr>
-                <td>{{ $item->nama }}</td>
-                <td>{{ $item->tempat_lahir }}, {{ $item->tanggal_lahir }}</td>
-                <td>{{ $item->jenis_kelamin }}</td>
-                <td>KELURAHAN {{ $item->wilayah->nama }}</td>
-                <td>Ling. {{ $item->rw }}</td>
+                <td>{{ $item->pemilih->nama }}</td>
+                <td>{{ $item->pemilih->tempat_lahir }}, {{ $item->pemilih->tanggal_lahir }}</td>
+                <td>{{ $item->pemilih->jenis_kelamin }}</td>
+                <td>KELURAHAN {{ $item->pemilih->wilayah->nama }}</td>
+                <td>Ling. {{ $item->pemilih->rw }}</td>
                 {{-- <td>TPS {{ $item->tps }}</td> --}}
+                <td>{{ $item->level->nama }}</td>
                 <td> 
-                  @if(!$item->pemilih)
-                    {{-- <div class="dropdown">
-                      <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                        <i class="ti ti-dots-vertical"></i>
-                      </button>
-                      <div class="dropdown-menu">
-                        <a class="dropdown-item" href="/penjaringan/create/{{ $item->id }}"
-                          ><i class="ti ti-pencil me-2"></i> Lakukan Penjaringan</a
-                        >
-                      </div>
-                    </div> --}}
-                    <a href="/penjaringan/create/{{ $item->id }}"> <span class="badge rounded-pill bg-warning"> <i class="ti ti-alert-circle me-2"></i> Belum</span> </a>
-                  @else
-                    <a href="/penjaringan/create/{{ $item->id }}"> <span class="badge rounded-pill bg-success"> <i class="ti ti-circle-check me-2"></i> Terjaring</span> </a>
-                  @endif
-
+                  <div class="dropdown">
+                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                      <i class="ti ti-dots-vertical"></i>
+                    </button>
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item" href="/penyaringan/edit/{{ $item->id }}"
+                        ><i class="ti ti-pencil me-2"></i> Update Penyaringan</a
+                      >
+                    </div>
+                  </div>
                 </td>
               </tr>
             @endforeach 
@@ -169,40 +155,24 @@
     const nama = document.getElementById('nama');
     
     $("#kelurahan" ).change(function() {
-      location.replace('/penjaringan?kelurahan=' + kelurahan.value + '&tps=' + tps.value + '&lingkungan=' + lingkungan.value + '&nama=' + nama.value)
+      location.replace('/penyaringan?kelurahan=' + kelurahan.value + '&tps=' + tps.value + '&lingkungan=' + lingkungan.value + '&nama=' + nama.value)
     });
 
     $("#lingkungan" ).change(function() {
-      location.replace('/penjaringan?kelurahan=' + kelurahan.value + '&tps=' + tps.value + '&lingkungan=' + lingkungan.value + '&nama=' + nama.value)
+      location.replace('/penyaringan?kelurahan=' + kelurahan.value + '&tps=' + tps.value + '&lingkungan=' + lingkungan.value + '&nama=' + nama.value)
     });
 
     $("#tps" ).change(function() {
-      location.replace('/penjaringan?kelurahan=' + kelurahan.value + '&tps=' + tps.value + '&lingkungan=' + lingkungan.value + '&nama=' + nama.value)
+      location.replace('/penyaringan?kelurahan=' + kelurahan.value + '&tps=' + tps.value + '&lingkungan=' + lingkungan.value + '&nama=' + nama.value)
     });
 
     $("#nama" ).change(function() {
-      location.replace('/penjaringan?kelurahan=' + kelurahan.value + '&tps=' + tps.value + '&lingkungan=' + lingkungan.value + '&nama=' + nama.value)
+      location.replace('/penyaringan?kelurahan=' + kelurahan.value + '&tps=' + tps.value + '&lingkungan=' + lingkungan.value + '&nama=' + nama.value)
     });
 
-    $("#print_pdf" ).click(function() {
-      window.open('/print/dpt2020?kelurahan=' + kelurahan.value + '&tps=' + tps.value + '&lingkungan=' + lingkungan.value + '&nama=' + nama.value, '_blank')
-    });
+
   </script>
 
   
- <script>
-  // $(document).ready(function () {
 
-  // var myTable = $('#pemilih_tabel').DataTable({
-  //         // "paging": true,
-  //         "lengthChange": false,
-  //         "pageLength": 20000,
-  //         "searching": true,
-  //         "ordering": true,
-  //         "info": true,
-  //         "autoWidth": true,
-  //     });
-
-  // });
-</script>
 @endSection

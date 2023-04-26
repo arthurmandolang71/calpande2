@@ -22,9 +22,15 @@
                         <a href="/penjaringan"><button class="btn btn-label-primary me-3">
                           <span class="align-middle"> Kembali</span>
                         </button></a>
-                        <button class="btn btn-primary">Belum terjaring</button>
+                        @if($dpt2020->pemilih == NULL)
+                            <button class="btn btn-warning">Belum terjaring</button>
+                        @else
+                            <button class="btn btn-success">Sudah terjaring</button>
+                        @endif
                       </div>
                     </div>
+
+                    @if($dpt2020->pemilih == NULL)
 
                     <form action="/penjaringan" method="post" enctype="multipart/form-data">
                     @csrf
@@ -415,6 +421,10 @@
                             </div>
 
                         </form>
+
+                        @else
+                            <button class="btn btn-success">Sudah terjaring</button>
+                        @endif
 
                           </div>
                         </div>

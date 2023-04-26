@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('pemilih', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('dpt_id');
+            $table->string('dpt_id_string');
             $table->string('string_id');
             $table->foreignUuid('agama_id');
             $table->string('nkk');
@@ -27,6 +28,7 @@ return new class extends Migration
             $table->string('rt')->nullable();
             $table->string('rw')->nullable();
             $table->string('foto_ktp')->nullable();
+            $table->string('tps')->nullable();
             $table->string('wilayah_id');
             $table->timestamps();
         });

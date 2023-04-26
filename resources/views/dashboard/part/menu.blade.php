@@ -85,8 +85,8 @@
                     <div data-i18n="Penjaringan">Penjaringan</div>
                   </a>
                 </li>
-                <li class="menu-item {{ Request::is('pemilih/dpt2020*') ? 'active' : '' }}">
-                  <a href="/pemilih/dpt2020" class="menu-link  ">
+                <li class="menu-item {{ Request::is('penyaringan*') ? 'active' : '' }}">
+                  <a href="/penyaringan" class="menu-link  ">
                     <i class="menu-icon tf-icons ti ti-list-search"></i>
                     <div data-i18n="Penyaringan">Penyaringan</div>
                   </a>

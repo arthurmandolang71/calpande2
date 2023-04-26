@@ -229,17 +229,17 @@ class DatabaseSeeder extends Seeder
 
         LevelStatus::create([
             'level' => 1,
-            'nama' => 'Penjaringan/Validasi',
+            'nama' => 'Penjaringan',
         ]);
 
         LevelStatus::create([
             'level' => 2,
-            'nama' => 'Pengembira/Kemungkinan Golput',
+            'nama' => 'Pengembira',
         ]);
 
         LevelStatus::create([
             'level' => 3,
-            'nama' => 'Pragmatis/Praktis',
+            'nama' => 'Pragmatis',
         ]);
 
         LevelStatus::create([
@@ -250,6 +250,11 @@ class DatabaseSeeder extends Seeder
         LevelStatus::create([
             'level' => 5,
             'nama' => 'Militansi',
+        ]);
+
+        LevelStatus::create([
+            'level' => 10,
+            'nama' => 'Pindah arus',
         ]);
 
 

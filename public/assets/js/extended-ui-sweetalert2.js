@@ -360,7 +360,7 @@
     autoClose.onclick = function () {
       var timerInterval;
       Swal.fire({
-        title: 'Auto close alert!',
+        title: 'Harap menungguh proses sedang berlangsung!',
         html: 'I will close in <strong></strong> seconds.',
         timer: 222000,
         customClass: {

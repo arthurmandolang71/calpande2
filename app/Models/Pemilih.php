@@ -22,24 +22,11 @@ class Pemilih extends Model
         return $this->belongsTo(Wilayah::class);
     }
 
-    public function tim() 
+    public function pemilih_client() 
     {
-        return $this->belongsTo(Tim::class);
+        return $this->belongsTo(PemilihClient::class,'id','pemilih_id');
     }
 
-    public function referensi_tim() 
-    {
-        return $this->belongsTo(ReferensiTim::class);
-    }
-
-    public function anggota_tim() 
-    {
-        return $this->belongsTo(AnggotaTim::class);
-    }
-
-    public function client()
-    {
-        return $this->belongsTo(Client::class);
-    }
+    
 
 }

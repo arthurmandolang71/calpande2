@@ -63,7 +63,7 @@ class PenjaringanController extends Controller
         } 
 
         if(request()->query()){
-            $dpt2020 = Dpt2020::orderBy("nama", "asc")
+            $dpt2020 = Dpt2020::with('pemilih')->orderBy("nama", "asc")
                     ->filter(request(['kelurahan','lingkungan','tps','nama']))
                     ->dapil();
             $dpt2020_count = $dpt2020->count();
@@ -91,12 +91,13 @@ class PenjaringanController extends Controller
 
     public function create(Dpt2020 $dpt2020)
     {
-
+        
         $agama = Agama::all();
-
+        $dpt = Dpt2020::with('pemilih.pemilih_client.user')->where('id', $dpt2020->id)->get()->first();
+        return $dpt;
         return view('dashboard.penjaringan.create',[
             'agama' => $agama,
-            'dpt2020' => $dpt2020,
+            'dpt2020' => $dpt,
         ]);
 
     }
@@ -115,6 +116,7 @@ class PenjaringanController extends Controller
             'agama_id' => ['required'],
             'rw' => ['required','numeric'],
             'catatan_koordinator' => ['required'],
+            // 'ktp' => ['required','image', 'file', 'mimes:jpeg,png,jpg','max:5024']
         ];
 
         if($request->file('ktp')){
@@ -127,20 +129,25 @@ class PenjaringanController extends Controller
 
         if(!$pemilih) {
 
-            $path = public_path('ktp/');
-            !is_dir($path) &&
-                mkdir($path, 0777, true);
+            if($request->file('ktp')){
+                $path = public_path('ktp/');
+                !is_dir($path) &&
+                    mkdir($path, 0777, true);
+    
+                $uuid = Str::uuid();
+                $name_ktp = $uuid . '.' . $request->ktp->extension();
+                ResizeImage::make($request->file('ktp'))
+                    ->resize(600, 400)
+                    ->save($path . $name_ktp);
+            } else {
+                $name_ktp = NULL;
+            }
 
-            $uuid = Str::uuid();
-            $name_ktp = $uuid . '.' . $request->ktp->extension();
-            ResizeImage::make($request->file('ktp'))
-                ->resize(600, 400)
-                ->save($path . $name_ktp);
-
-            $dpt = Dpt2020::find($request->input('id'))->first();
-            // return $dpt;
+            $dpt = Dpt2020::where('id',$request->input('id'))->get()->first();
+           
             $insert_pemilih = [
                 'dpt_id' => $dpt->id,
+                'dpt_id_string' => $dpt->string_id,
                 'agama_id' => $validateData['agama_id'],
                 'nkk' => $validateData['nkk'],
                 'nik' => $validateData['nik'],
@@ -154,14 +161,11 @@ class PenjaringanController extends Controller
                 'rw' => $validateData['rw'],
                 'foto_ktp' => $name_ktp,
                 'wilayah_id' => $dpt->wilayah->id,  
-                
             ];
     
             $pemilih = Pemilih::create($insert_pemilih);
-        }
-
-        
-
+        } 
+    
         $insert_pemilih_client = [
             'client_id' => auth()->user()->anggota_tim->client_id,
             'user_id' => auth()->user()->id,
@@ -172,12 +176,11 @@ class PenjaringanController extends Controller
             'no_wa' => trim($request->input('no_wa')) ?? NULL,
             'catatan_koordinator' => $validateData['catatan_koordinator'],
             'catatan_tim' => '',
-            
         ];
 
         PemilihClient::create($insert_pemilih_client);
    
-        return redirect('/penjaringan')->with('pesan','Penjariangan berhasil dilakukan');
+        return redirect('/penjaringan')->with('pesan','Penjariangan berhasil dilakukan. silakan lanjutkan penjaringan');
 
     }
 

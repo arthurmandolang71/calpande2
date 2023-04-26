@@ -22,6 +22,11 @@ class Dpt2020 extends Model
         return $this->belongsTo(Wilayah::class, 'wilayah_id', 'id');
     }
 
+    public function pemilih()
+    {
+        return $this->belongsTo(Pemilih::class, 'string_id', 'dpt_id_string');
+    }
+
     public function scopeFilter($query, array $filters)
     {
        
@@ -49,7 +54,6 @@ class Dpt2020 extends Model
 
     public function scopeDapil($query)
     {
-       
         $kec_dapil = session()->get('kode_kec_dapil');
         $query->whereHas('wilayah', fn($query) => 
             $query->whereIn('kode_kec', $kec_dapil)       

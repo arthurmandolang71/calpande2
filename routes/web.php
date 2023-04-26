@@ -8,6 +8,7 @@ use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\Dpt2020Controller;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PenjaringanController;
+use App\Http\Controllers\PenyaringanController;
 use App\Http\Controllers\TimLingkunganController;
 
 /*
@@ -79,6 +80,12 @@ Route::controller(PenjaringanController::class)->middleware('isAdminClient')->gr
     Route::post('/penjaringan', 'store');
     Route::get('/penjaringan/create/{dpt2020}', 'create');
     Route::get('/print/penjaringan/', 'print');
+});
+
+Route::controller(PenyaringanController::class)->middleware('isAdminClient')->group(function () {
+    Route::get('/penyaringan', 'index');
+    Route::get('/penyaringan/edit/{dpt2020}', 'edit');
+    Route::post('/penyaringan', 'update');
 });
 
 
