@@ -75,7 +75,7 @@
         </div>
         <div class="col-md-2">
           <br>
-          <a href="/penjaringan"><button type="button" class="btn btn-primary"><i class="tf-icons ti ti-arrow-back"></i></button></a>
+          <a href="/penyaringan"><button type="button" class="btn btn-primary"><i class="tf-icons ti ti-arrow-back"></i></button></a>
         </div>
       </div>
     </div>
@@ -90,9 +90,7 @@
                 <th>TTL</th>
                 <th>JK</th>
                 <th>Kelurahan</th>
-                <th>Ling.</th>
-                {{-- <th>Tps</th> --}}
-                <th>Status</th>
+                <th>Ling.</th>               
                 <th>Actions</th>
               </tr>
             </thead>
@@ -105,19 +103,20 @@
                 <td>{{ $item->pemilih->jenis_kelamin }}</td>
                 <td>KELURAHAN {{ $item->pemilih->wilayah->nama }}</td>
                 <td>Ling. {{ $item->pemilih->rw }}</td>
-                {{-- <td>TPS {{ $item->tps }}</td> --}}
-                <td>{{ $item->level->nama }}</td>
                 <td> 
-                  <div class="dropdown">
-                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                      <i class="ti ti-dots-vertical"></i>
-                    </button>
-                    <div class="dropdown-menu">
-                      <a class="dropdown-item" href="/penyaringan/edit/{{ $item->id }}"
-                        ><i class="ti ti-pencil me-2"></i> Update Penyaringan</a
-                      >
-                    </div>
-                  </div>
+                  @if($item->level->level == 1)
+                    <a href="/penyaringan/edit/{{ $item->id }}""> <span class="badge rounded-pill bg-secondary"> <i class="ti ti-question-mark me-2"></i> Penjaringan</span> </a>
+                  @elseif($item->level->level == 2)
+                    <a href="/penyaringan/edit/{{ $item->id }}""> <span class="badge rounded-pill bg-info"> <i class="ti ti-question-mark me-2"></i> Pengembira</span> </a>
+                  @elseif($item->level->level == 3)
+                    <a href="/penyaringan/edit/{{ $item->id }}""> <span class="badge rounded-pill bg-dark"> <i class="ti ti-question-mark me-2"></i> Pragmatis</span> </a>
+                  @elseif($item->level->level == 4)
+                    <a href="/penyaringan/edit/{{ $item->id }}""> <span class="badge rounded-pill bg-success"> <i class="ti ti-question-mark me-2"></i> Loyalis</span> </a>
+                  @elseif($item->level->level == 5)
+                    <a href="/penyaringan/edit/{{ $item->id }}""> <span class="badge rounded-pill bg-primary"> <i class="ti ti-question-mark me-2"></i> Militansi</span> </a>
+                  @else
+                    <a href="/penyaringan/edit/{{ $item->id }}""> <span class="badge rounded-pill bg-danger"> <i class="ti ti-question-mark me-2"></i> Pindah Arus</span> </a>
+                  @endif
                 </td>
               </tr>
             @endforeach 

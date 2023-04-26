@@ -14,7 +14,7 @@ class Dapil extends Model
     protected $table = 'dapil';
     protected $primaryKey = 'id';
     protected $guarded = ['id'];
-    protected $with = ['wilayah'];
+    // protected $with = ['wilayah'];
 
     public function wilayah()
     {

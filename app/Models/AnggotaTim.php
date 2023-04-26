@@ -15,7 +15,7 @@ class AnggotaTim extends Model
     protected $table = 'anggota_tim';
     protected $primaryKey = 'id';
     protected $guarded = ['id'];
-    protected $with = ['agama','client'];
+    // protected $with = ['agama','client'];
 
     public function user() 
     {

@@ -56,12 +56,12 @@ class PenyaringanController extends Controller
         } 
 
         if(request()->query()){
-            $pemilih = PemilihClient::filter(request(['kelurahan','lingkungan','tps','nama']));
+            $pemilih = PemilihClient::where('client_id', request()->session()->get('client_id') )->filter(request(['kelurahan','lingkungan','tps','nama']));
             $pemilih_count = $pemilih->count();
-            $pemilih = $pemilih->cursorPaginate(100)->withQueryString(); 
+            $pemilih = $pemilih->where('client_id', request()->session()->get('client_id') )->cursorPaginate(100)->withQueryString(); 
         } else {
-            $pemilih_count = PemilihClient::count();
-            $pemilih = PemilihClient::cursorPaginate(100)->withQueryString(); 
+            $pemilih_count = PemilihClient::where('client_id', request()->session()->get('client_id') )->count();
+            $pemilih = PemilihClient::where('client_id', request()->session()->get('client_id') )->cursorPaginate(100)->withQueryString(); 
         }
        
         $kelurahan = Wilayah::kelurahanDapil()->get();

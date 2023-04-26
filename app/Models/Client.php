@@ -13,7 +13,7 @@ class Client extends Model
     protected $table = 'client';
     protected $primaryKey = 'id';
     protected $guarded = ['id'];
-    protected $with = ['kendaraan','dapil'];
+    // protected $with = ['kendaraan','dapil'];
 
     public function kendaraan()
     {

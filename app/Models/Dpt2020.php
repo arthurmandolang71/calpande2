@@ -15,7 +15,7 @@ class Dpt2020 extends Model
     protected $table = 'dpt2020';
     protected $primaryKey = 'id';
     protected $guarded = ['id'];
-    protected $with = ['wilayah'];
+    // protected $with = ['wilayah'];
 
     public function wilayah()
     {

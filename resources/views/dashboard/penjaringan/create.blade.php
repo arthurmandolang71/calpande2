@@ -22,16 +22,47 @@
                         <a href="/penjaringan"><button class="btn btn-label-primary me-3">
                           <span class="align-middle"> Kembali</span>
                         </button></a>
-                        @if($dpt2020->pemilih == NULL)
-                            <button class="btn btn-warning">Belum terjaring</button>
+
+                        @if(isset($item->pemilih->pemilih_client->user->anggota_tim->client_id))
+                            @if($item->pemilih->pemilih_client->user->anggota_tim->client_id == request()->session()->get('client_id'))
+                                <button class="btn btn-success">Sudah terjaring</button>
+                            @else
+                                <button class="btn btn-warning">Belum terjaring</button>
+                            @endif
+                        
                         @else
-                            <button class="btn btn-success">Sudah terjaring</button>
+                            <button class="btn btn-warning">Belum terjaring</button>
                         @endif
+
                       </div>
                     </div>
+                
+                 {{ $belum = NULL }}
+                 @if(isset($item->pemilih->pemilih_client->user->anggota_tim->client_id))
 
-                    @if($dpt2020->pemilih == NULL)
+                    @if($item->pemilih->pemilih_client->user->anggota_tim->client_id == request()->session()->get('client_id'))
+                    
+                        <div class="alert alert-success alert-dismissible d-flex align-items-baseline" role="alert">
+                            <span class="alert-icon alert-icon-lg text-success me-2">
+                            <i class="ti ti-check ti-sm"></i>
+                            </span>
+                            <div class="d-flex flex-column ps-1">
+                            <p class="mb-0">
+                                <b>{{ $dpt->nama }}</b> telah di jaring oleh <b>{{ $dpt->pemilih->pemilih_client->user->name }}</b> pada {{ $dpt->pemilih->pemilih_client->created_at->diffForHumans() }}.
+                                Silakan bekerja sama dengan menghubungi nomor <b>{{ $dpt->pemilih->pemilih_client->user->anggota_tim->no_wa }}</b>
+                            </p>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        </div>
+                    @else
+                        {{ $belum = 1 }}
+                    @endif
+                @else
+                    {{ $belum = 1 }}
+                @endif
 
+                @if($belum)
+                
                     <form action="/penjaringan" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="card-body">
@@ -54,7 +85,7 @@
                           <div class="row g-3">
                            
 
-                            <input type="hidden" name="id" value="{{ $dpt2020->id }}">
+                            <input type="hidden" name="id" value="{{ $dpt->id }}">
 
                             <div class="col-md-12">
                                 <div class="form-floating">
@@ -65,7 +96,7 @@
                                         id="floatingInput"
                                         placeholder="Masukan nama lengkap"
                                         aria-describedby="floatingInputHelp"
-                                        value="{{ $dpt2020->nama }}"
+                                        value="{{ $dpt->nama }}"
                                         readonly
                                     />
                                     <label for="floatingInput">Nama Lengkap</label>
@@ -84,7 +115,7 @@
                                         id="floatingInput"
                                         placeholder="Masukan nama lengkap"
                                         aria-describedby="floatingInputHelp"
-                                        value="{{ $dpt2020->tempat_lahir }}"
+                                        value="{{ $dpt->tempat_lahir }}"
                                         readonly
                                     />
                                     <label for="floatingInput">Tempat Lahir</label>
@@ -103,7 +134,7 @@
                                         id="floatingInput"
                                         placeholder="Masukan nama lengkap"
                                         aria-describedby="floatingInputHelp"
-                                        value="{{ $dpt2020->tanggal_lahir }}"
+                                        value="{{ $dpt->tanggal_lahir }}"
                                         readonly
                                     />
                                     <label for="floatingInput">Tanggal Lahir</label>
@@ -121,9 +152,9 @@
                                 id="address"
                                 rows="2"
                                 placeholder="1456, Mall Road"
-                                value="{{ $dpt2020->alamat }}"
+                                value="{{ $dpt->alamat }}"
                                 readonly
-                              >{{ $dpt2020->alamat }}</textarea>
+                              >{{ $dpt->alamat }}</textarea>
                             </div>
 
                             <div class="col-md-6">
@@ -135,7 +166,7 @@
                                         id="floatingInput"
                                         placeholder="Masukan nama lengkap"
                                         aria-describedby="floatingInputHelp"
-                                        value="{{ $dpt2020->rt }}"
+                                        value="{{ $dpt->rt }}"
                                         readonly
                                     />
                                     <label for="floatingInput">RT</label>
@@ -154,7 +185,7 @@
                                         id="floatingInput"
                                         placeholder="Masukan nama lengkap"
                                         aria-describedby="floatingInputHelp"
-                                        value="0{{ $dpt2020->rw }}"
+                                        value="0{{ $dpt->rw }}"
                                         
                                     />
                                     <label for="floatingInput">RW / Lingkugan</label>
@@ -174,7 +205,7 @@
                                         id="floatingInput"
                                         placeholder="Masukan nama lengkap"
                                         aria-describedby="floatingInputHelp"
-                                        value="{{ $dpt2020->jenis_kelamin }}"
+                                        value="{{ $dpt->jenis_kelamin }}"
                                         readonly
                                     />
                                     <label for="floatingInput">Jenis Kelamin (Laki-laki/Perempuan)</label>
@@ -193,7 +224,7 @@
                                         id="floatingInput"
                                         placeholder="Masukan nama lengkap"
                                         aria-describedby="floatingInputHelp"
-                                        value="{{ $dpt2020->kawin }}"
+                                        value="{{ $dpt->kawin }}"
                                         readonly
                                     />
                                     <label for="floatingInput">Status Kawin (Belum / Sudah)</label>
@@ -220,7 +251,7 @@
                                         id="floatingInput"
                                         placeholder="Masukan nama lengkap"
                                         aria-describedby="floatingInputHelp"
-                                        value="{{ old('nik', $dpt2020->nik) }}"
+                                        value="{{ old('nik', $dpt->nik) }}"
                                     />
                                     <label for="floatingInput">NIK</label>
                                     <div id="floatingInputHelp" class="form-text">
@@ -246,7 +277,7 @@
                                         id="floatingInput"
                                         placeholder="Masukan nama lengkap"
                                         aria-describedby="floatingInputHelp"
-                                        value="{{ old('nkk', $dpt2020->nkk) }}"
+                                        value="{{ old('nkk', $dpt->nkk) }}"
                                     />
                                     <label for="floatingInput">KK</label>
                                     <div id="floatingInputHelp" class="form-text">
@@ -422,8 +453,6 @@
 
                         </form>
 
-                        @else
-                            <button class="btn btn-success">Sudah terjaring</button>
                         @endif
 
                           </div>

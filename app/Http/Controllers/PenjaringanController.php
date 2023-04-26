@@ -63,7 +63,7 @@ class PenjaringanController extends Controller
         } 
 
         if(request()->query()){
-            $dpt2020 = Dpt2020::with('pemilih')->orderBy("nama", "asc")
+            $dpt2020 = Dpt2020::with('pemilih.pemilih_client.user.anggota_tim')->orderBy("nama", "asc")
                     ->filter(request(['kelurahan','lingkungan','tps','nama']))
                     ->dapil();
             $dpt2020_count = $dpt2020->count();
@@ -76,7 +76,7 @@ class PenjaringanController extends Controller
         $kelurahan = Wilayah::kelurahanDapil()->get();
         
         return view('dashboard.penjaringan.index', [
-            'pemilih' => $dpt2020 ?? NULL,
+            'dpt' => $dpt2020 ?? NULL,
             'total_get' => $dpt2020_count,
             'kelurahan' => $kelurahan,
             'list_lingkungan' => $list_lingkungan_kelurahan,
@@ -93,11 +93,11 @@ class PenjaringanController extends Controller
     {
         
         $agama = Agama::all();
-        $dpt = Dpt2020::with('pemilih.pemilih_client.user')->where('id', $dpt2020->id)->get()->first();
-        return $dpt;
+        $dpt = Dpt2020::with('pemilih.pemilih_client.user.anggota_tim')->where('id', $dpt2020->id)->get()->first();
+        // return $dpt;
         return view('dashboard.penjaringan.create',[
             'agama' => $agama,
-            'dpt2020' => $dpt,
+            'dpt' => $dpt,
         ]);
 
     }

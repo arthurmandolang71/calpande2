@@ -106,8 +106,8 @@
               </tr>
             </thead>
             <tbody class="table-border-bottom-0">
-            @if($pemilih)
-            @foreach ($pemilih as $item)
+            @if($dpt)
+            @foreach ($dpt as $item)
               <tr>
                 <td>{{ $item->nama }}</td>
                 <td>{{ $item->tempat_lahir }}, {{ $item->tanggal_lahir }}</td>
@@ -116,22 +116,16 @@
                 <td>Ling. {{ $item->rw }}</td>
                 {{-- <td>TPS {{ $item->tps }}</td> --}}
                 <td> 
-                  @if(!$item->pemilih)
-                    {{-- <div class="dropdown">
-                      <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                        <i class="ti ti-dots-vertical"></i>
-                      </button>
-                      <div class="dropdown-menu">
-                        <a class="dropdown-item" href="/penjaringan/create/{{ $item->id }}"
-                          ><i class="ti ti-pencil me-2"></i> Lakukan Penjaringan</a
-                        >
-                      </div>
-                    </div> --}}
-                    <a href="/penjaringan/create/{{ $item->id }}"> <span class="badge rounded-pill bg-warning"> <i class="ti ti-alert-circle me-2"></i> Belum</span> </a>
+                  @if(isset($item->pemilih->pemilih_client->user->anggota_tim->client_id))
+                    @if($item->pemilih->pemilih_client->user->anggota_tim->client_id == request()->session()->get('client_id'))
+                      <a href="/penjaringan/create/{{ $item->id }}"> <span class="badge rounded-pill bg-success"> <i class="ti ti-circle-check me-2"></i> Terjaring</span> </a>
+                    @else
+                      <a href="/penjaringan/create/{{ $item->id }}"> <span class="badge rounded-pill bg-warning"> <i class="ti ti-alert-circle me-2"></i> Belum</span> </a>
+                    @endif
+                   
                   @else
-                    <a href="/penjaringan/create/{{ $item->id }}"> <span class="badge rounded-pill bg-success"> <i class="ti ti-circle-check me-2"></i> Terjaring</span> </a>
+                    <a href="/penjaringan/create/{{ $item->id }}"> <span class="badge rounded-pill bg-warning"> <i class="ti ti-alert-circle me-2"></i> Belum</span> </a>
                   @endif
-
                 </td>
               </tr>
             @endforeach 
@@ -142,9 +136,9 @@
       </div>
 
       <br>
-      @if($pemilih)
+      @if($dpt)
       <div class="container">
-        {{ $pemilih->links(); }}
+        {{ $dpt->links(); }}
       </div>
       @endif
   

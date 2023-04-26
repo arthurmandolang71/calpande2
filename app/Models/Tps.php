@@ -13,7 +13,7 @@ class Tps extends Model
     protected $table = 'tps';
     protected $primaryKey = 'id';
     protected $guarded = ['id'];
-    protected $with = ['wilayah'];
+    // protected $with = ['wilayah'];
 
     public function wilayah() 
     {

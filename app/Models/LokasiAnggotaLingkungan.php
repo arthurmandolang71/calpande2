@@ -14,7 +14,7 @@ class LokasiAnggotaLingkungan extends Model
     protected $table = 'lokasi_anggota_lingkungan';
     protected $primaryKey = 'id';
     protected $guarded = ['id'];
-    protected $with = ['anggota_tim'];
+    // protected $with = ['anggota_tim'];
 
    
     public function anggota_tim()

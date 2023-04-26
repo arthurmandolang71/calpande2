@@ -13,7 +13,7 @@ class PemilihClient extends Model
     protected $table = 'pemilih_client';
     protected $primaryKey = 'id';
     protected $guarded = ['id'];
-    protected $with = ['pemilih','client','referensi','level'];
+    // protected $with = ['pemilih','client','referensi','level'];
 
     public function pemilih() 
     {
@@ -23,11 +23,6 @@ class PemilihClient extends Model
     public function client() 
     {
         return $this->belongsTo(Client::class,'client_id', 'id');
-    }
-
-    public function referensi() 
-    {
-        return $this->belongsTo(User::class,'user_id','id');
     }
 
     public function level() 
