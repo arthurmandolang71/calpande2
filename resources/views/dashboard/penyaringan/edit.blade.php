@@ -7,7 +7,7 @@
  
  <!-- Content -->
     <div class="container-xxl flex-grow-1 container-p-y">
-        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Penjaringan /</span> Form Penjaringan</h4> <!-- title -->
+        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Penyaringan /</span> Form Penyaringan</h4> <!-- title -->
 
 
        <!-- Sticky Actions -->
@@ -17,19 +17,20 @@
                     <div
                       class="card-header sticky-element bg-label-secondary d-flex justify-content-sm-between align-items-sm-center flex-column flex-sm-row"
                     >
-                      <h5 class="card-title mb-sm-0 me-2">Form Penjaringan</h5>
+                      <h5 class="card-title mb-sm-0 me-2">Form Penyaringan</h5>
                       <div class="action-btns">
                         <a href="/penjaringan"><button class="btn btn-label-primary me-3">
                           <span class="align-middle"> Kembali</span>
                         </button></a>
 
-                        <button class="btn btn-warning">Belum terjaring</button>
+                        <button class="btn btn-primary">Lakukan Panyaringan</button>
                       
                       </div>
                     </div>
                      
-                    <form action="/penjaringan" method="post" enctype="multipart/form-data">
+                    <form action="/penyaringan/{{ $pemilih->id }}" method="POST" enctype="multipart/form-data">
                     @csrf
+                    @method('PUT')
                     <div class="card-body">
                       <div class="row">
                         <div class="col-lg-8 mx-auto">
@@ -48,10 +49,7 @@
                           <!-- 1. Delivery Address -->
                           <h5 class="mb-4">1. Data Kependudukan</h5>
                           <div class="row g-3">
-                           
-
-                            <input type="hidden" name="id" value="{{ $dpt->id }}">
-
+                      
                             <div class="col-md-12">
                                 <div class="form-floating">
                                     <input
@@ -61,8 +59,8 @@
                                         id="floatingInput"
                                         placeholder="Masukan nama lengkap"
                                         aria-describedby="floatingInputHelp"
-                                        value="{{ $dpt->nama }}"
-                                        readonly
+                                        value="{{ $pemilih->pemilih->nama }}"
+                                        disabled
                                     />
                                     <label for="floatingInput">Nama Lengkap</label>
                                     <div id="floatingInputHelp" class="form-text">
@@ -80,8 +78,8 @@
                                         id="floatingInput"
                                         placeholder="Masukan nama lengkap"
                                         aria-describedby="floatingInputHelp"
-                                        value="{{ $dpt->tempat_lahir }}"
-                                        readonly
+                                        value="{{ $pemilih->pemilih->tempat_lahir }}"
+                                        disabled
                                     />
                                     <label for="floatingInput">Tempat Lahir</label>
                                     <div id="floatingInputHelp" class="form-text">
@@ -99,8 +97,8 @@
                                         id="floatingInput"
                                         placeholder="Masukan nama lengkap"
                                         aria-describedby="floatingInputHelp"
-                                        value="{{ $dpt->tanggal_lahir }}"
-                                        readonly
+                                        value="{{ $pemilih->pemilih->tanggal_lahir }}"
+                                        disabled
                                     />
                                     <label for="floatingInput">Tanggal Lahir</label>
                                     <div id="floatingInputHelp" class="form-text">
@@ -117,9 +115,9 @@
                                 id="address"
                                 rows="2"
                                 placeholder="1456, Mall Road"
-                                value="{{ $dpt->alamat }}"
-                                readonly
-                              >{{ $dpt->alamat }}</textarea>
+                                value="{{ $pemilih->pemilih->alamat }}"
+                                disabled
+                              >{{ $pemilih->pemilih->alamat }}</textarea>
                             </div>
 
                             <div class="col-md-6">
@@ -131,8 +129,8 @@
                                         id="floatingInput"
                                         placeholder="Masukan nama lengkap"
                                         aria-describedby="floatingInputHelp"
-                                        value="{{ $dpt->rt }}"
-                                        readonly
+                                        value="{{ $pemilih->pemilih->rt }}"
+                                        disabled
                                     />
                                     <label for="floatingInput">RT</label>
                                     <div id="floatingInputHelp" class="form-text">
@@ -146,12 +144,13 @@
                                     <input
                                         type="text"
                                         name="rw"
-                                        class="form-control"
+                                        class="form-control is-valid"
                                         id="floatingInput"
                                         placeholder="Masukan nama lengkap"
                                         aria-describedby="floatingInputHelp"
-                                        value="0{{ $dpt->rw }}"
-                                        
+                                        readonly
+                                        value="0{{ $pemilih->pemilih->rw }}"
+                                        disabled
                                     />
                                     <label for="floatingInput">RW / Lingkugan</label>
                                     <div id="floatingInputHelp" class="form-text">
@@ -170,8 +169,8 @@
                                         id="floatingInput"
                                         placeholder="Masukan nama lengkap"
                                         aria-describedby="floatingInputHelp"
-                                        value="{{ $dpt->jenis_kelamin }}"
-                                        readonly
+                                        value="{{ $pemilih->pemilih->jenis_kelamin }}"
+                                        disabled
                                     />
                                     <label for="floatingInput">Jenis Kelamin (Laki-laki/Perempuan)</label>
                                     <div id="floatingInputHelp" class="form-text">
@@ -189,8 +188,8 @@
                                         id="floatingInput"
                                         placeholder="Masukan nama lengkap"
                                         aria-describedby="floatingInputHelp"
-                                        value="{{ $dpt->kawin }}"
-                                        readonly
+                                        value="{{ $pemilih->pemilih->kawin }}"
+                                        disabled
                                     />
                                     <label for="floatingInput">Status Kawin (Belum / Sudah)</label>
                                     <div id="floatingInputHelp" class="form-text">
@@ -200,23 +199,16 @@
                             </div>
 
                             <div class="col-md-6">
-                                @error('nik')
-                                <div class="alert alert-danger d-flex align-items-center" role="alert">
-                                    <span class="alert-icon text-danger me-2">
-                                    <i class="ti ti-ban ti-xs"></i>
-                                    </span>
-                                    {{ $message }}
-                                </div>   
-                                @enderror
                                 <div class="form-floating">
                                     <input
                                         type="text"
                                         name="nik"
-                                        class="form-control @error('nik') is-invalid @enderror"
+                                        class="form-control is-valid"
                                         id="floatingInput"
                                         placeholder="Masukan nama lengkap"
                                         aria-describedby="floatingInputHelp"
-                                        value="{{ old('nik', $dpt->nik) }}"
+                                        value="{{ old('nik', $pemilih->pemilih->nik) }}"
+                                        disabled
                                     />
                                     <label for="floatingInput">NIK</label>
                                     <div id="floatingInputHelp" class="form-text">
@@ -226,23 +218,16 @@
                             </div>
 
                             <div class="col-md-6">
-                                @error('nkk')
-                                <div class="alert alert-danger d-flex align-items-center" role="alert">
-                                    <span class="alert-icon text-danger me-2">
-                                    <i class="ti ti-ban ti-xs"></i>
-                                    </span>
-                                    {{ $message }}
-                                </div>   
-                                @enderror
                                 <div class="form-floating">
                                     <input
                                         type="text"
                                         name="nkk"
-                                        class="form-control @error('nkk') is-invalid @enderror"
+                                        class="form-control is-valid"
                                         id="floatingInput"
                                         placeholder="Masukan nama lengkap"
                                         aria-describedby="floatingInputHelp"
-                                        value="{{ old('nkk', $dpt->nkk) }}"
+                                        value="{{ old('nkk', $pemilih->pemilih->nkk) }}"
+                                        disabled
                                     />
                                     <label for="floatingInput">KK</label>
                                     <div id="floatingInputHelp" class="form-text">
@@ -255,6 +240,20 @@
                     
                           <!-- 3. Apply Promo code -->
                           <h5 class="my-4">2. Informasi Lanjutan</h5>
+
+                            <div class="mt-2 mb-3">
+                                    <label for="largeSelect" class="form-label">Agama</label>
+                                    <select name="agama_id" id="largeSelect" class="form-select form-select-lg" disabled >
+                                    <option value="">Pilih Agama</option>
+                                        @foreach ($agama as $item)
+                                            @if(old('agama_id',$pemilih->pemilih->agama_id) == $item->id)
+                                                <option value="{{ $item->id }}" selected>{{ $item->nama }}</option>
+                                            @else
+                                                <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                                            @endif
+                                        @endforeach
+                                    </select>
+                            </div>
                           
                           <div class="col-md-12">
                             @error('alamat')
@@ -272,7 +271,8 @@
                                   class="form-control @error('alamat') is-invalid @enderror"
                                   rows="2"
                                   placeholder="Masukan alamat atau patokan rumah"
-                                >{{ old('alamat') }}
+                                 
+                                >{{ old('alamat',$pemilih->alamat) }}
                                 </textarea>
                             </div>
                           </div>
@@ -294,7 +294,8 @@
                                     id="floatingInput"
                                     placeholder="jika tidak ada isikan no hp keluarga"
                                     aria-describedby="floatingInputHelp"
-                                    value="{{ old('no_hp') }}"
+                                    value="{{ old('no_hp',$pemilih->no_hp) }}"
+                                   
                                 />
                                 <label for="floatingInput">No. Hp</label>
                                 <div id="floatingInputHelp" class="form-text">
@@ -320,7 +321,8 @@
                                     id="floatingInput"
                                     placeholder="jika no hp sama dengan nomor wa silakan isikan kembali"
                                     aria-describedby="floatingInputHelp"
-                                    value="{{ old('no_wa') }}"
+                                    value="{{ old('no_wa',$pemilih->no_wa) }}"
+                                    
                                 />
                                 <label for="floatingInput">No. WA</label>
                                 <div id="floatingInputHelp" class="form-text">
@@ -329,27 +331,21 @@
                             </div>
                           </div>
 
-                          @error('agama_id')
-                          <div class="alert alert-danger d-flex align-items-center" role="alert">
-                              <span class="alert-icon text-danger me-2">
-                              <i class="ti ti-ban ti-xs"></i>
-                              </span>
-                              {{ $message }}
-                          </div>   
-                          @enderror
-                          <div class="mt-2 mb-3">
-                                <label for="largeSelect" class="form-label">Agama</label>
-                                <select name="agama_id" id="largeSelect" class="form-select form-select-lg @error('agama_id') is-invalid @enderror" >
-                                <option value="">Pilih Agama</option>
-                                    @foreach ($agama as $item)
-                                        @if(old('agama_id') == $item->id)
-                                            <option value="{{ $item->id }}" selected>{{ $item->nama }}</option>
-                                        @else
-                                        <option value="{{ $item->id }}">{{ $item->nama }}</option>
-                                        @endif
-                                    @endforeach
-                                </select>
-                           </div>
+                           <div class="col-md-12">
+                                  <div class="col-12">
+                                      <label class="form-label" for="address">Catatan Tim</label>
+                                      <textarea
+                                          name="catatan_koordinator"
+                                          class="form-control"
+                                          id="catatan"
+                                          rows="2"
+                                          placeholder="Masukan alamat atau patokan rumah"
+                                          disabled
+                                      >{{ old('catatan_tim',$pemilih->catatan_tim) }}
+                                      </textarea>
+                                  </div>
+                            </div>
+
 
                            <div class="col-md-12">
                                 @error('catatan_koordinator')
@@ -368,51 +364,172 @@
                                         id="catatan"
                                         rows="2"
                                         placeholder="Masukan alamat atau patokan rumah"
-                                    >{{ old('catatan_koordinator') }}
+                                    >{{ old('catatan_koordinator',$pemilih->catatan_koordinator) }}
                                     </textarea>
                                 </div>
+                           </div>
+
+                          <h5 class="my-4">3. Update Penyaringan</h5>
+
+                          <div class="alert alert-primary alert-dismissible d-flex align-items-baseline" role="alert">
+                            <span class="alert-icon alert-icon-lg text-success me-2">
+                            <i class="ti ti-user ti-sm"></i>
+                            </span>
+                            <div class="d-flex flex-column ps-1">
+                            <p class="mb-0">
+                                telah di jaring oleh <b>{{ $pemilih->user->name }}</b> pada {{ $pemilih->created_at->diffForHumans() }}.
+                                untuk informasi terkait silakan hubungi nomor <b>{{ $pemilih->user->anggota_tim->no_wa }}</b>
+                            </p>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
                           </div>
 
-                          
+                          <div class="row gy-3">
 
+                            <div class="col-md">
+                              <div class="form-check custom-option custom-option-icon">
+                                <label class="form-check-label custom-option-content" for="customRadioIcon1">
+                                  <span class="custom-option-body">
+                                    <i class="ti ti-brackets"></i>
+                                    <span class="custom-option-title"> Penjaringan </span>
+                                    <small> Tahap awal penjangkuan potensial pendukung. </small>
+                                  </span>
+                                  <input
+                                    name="level_status_id"
+                                    class="form-check-input"
+                                    type="radio"
+                                    value="1"
+                                    id="customRadioIcon1"
+                                    @if($pemilih->level_status_id == 1)
+                                      checked
+                                    @endif
+                                  />
+                                </label>
+                              </div>
+                            </div>
+                            <div class="col-md">
+                              <div class="form-check custom-option custom-option-icon">
+                                <label class="form-check-label custom-option-content" for="customRadioIcon2">
+                                  <span class="custom-option-body">
+                                    <i class="ti ti-send"></i>
+                                    <span class="custom-option-title"> Pengembira </span>
+                                    <small> Acuh tak acuh atau hanya ikut ikutan.</small>
+                                  </span>
+                                  <input
+                                    name="level_status_id"
+                                    class="form-check-input"
+                                    type="radio"
+                                    value="2"
+                                    id="customRadioIcon2"
+                                    @if($pemilih->level_status_id == 2)
+                                      checked
+                                    @endif
+                                  />
+                                </label>
+                              </div>
+                            </div>
+                            <div class="col-md">
+                              <div class="form-check custom-option custom-option-icon">
+                                <label class="form-check-label custom-option-content" for="customRadioIcon3">
+                                  <span class="custom-option-body">
+                                    <i class="ti ti-currency-dollar"></i>
+                                    <span class="custom-option-title"> Pragmatis </span>
+                                    <small> Memilih berdasarkan pemberian uang. </small>
+                                  </span>
+                                  <input
+                                    name="level_status_id"
+                                    class="form-check-input"
+                                    type="radio"
+                                    value="3"
+                                    id="customRadioIcon3"
+                                    @if($pemilih->level_status_id == 3)
+                                      checked
+                                    @endif
+                                  />
+                                </label>
+                              </div>
+                            </div>
+
+                         
+                            
+                            
+                          </div>
                           <hr />
-                          <!-- 4. Payment Method -->
+                          
+                          <div class="row g-3">
+                            <div class="col-md">
+                              <div class="form-check custom-option custom-option-icon">
+                                <label class="form-check-label custom-option-content" for="customRadioIcon3">
+                                  <span class="custom-option-body">
+                                    <i class="ti ti-heart-plus"></i>
+                                    <span class="custom-option-title"> Loyalis </span>
+                                    <small> Pemilih yang memiliki potensi untuk mendukung. </small>
+                                  </span>
+                                  <input
+                                    name="level_status_id"
+                                    class="form-check-input"
+                                    type="radio"
+                                    value="4"
+                                    id="customRadioIcon3"
+                                    @if($pemilih->level_status_id == 4)
+                                      checked
+                                    @endif
+                                  />
+                                </label>
+                              </div>
+                            </div>
+                            <div class="col-md">
+                                <div class="form-check custom-option custom-option-icon">
+                                  <label class="form-check-label custom-option-content" for="customRadioIcon4">
+                                    <span class="custom-option-body">
+                                      <i class="ti ti-karate"></i>
+                                      <span class="custom-option-title"> Militansi </span>
+                                      <small> Pemilih yang berpotensi mendukung dan berjuang memenangkan Pesta Demokrasi. </small>
+                                    </span>
+                                    <input
+                                      name="level_status_id"
+                                      class="form-check-input"
+                                      type="radio"
+                                      value="5"
+                                      id="customRadioIcon4"
+                                      @if($pemilih->level_status_id == 5)
+                                        checked
+                                      @endif
+                                    />
+                                  </label>
+                                </div>
+                              </div>
+                              <div class="col-md">
+                                <div class="form-check custom-option custom-option-icon">
+                                  <label class="form-check-label custom-option-content" for="customRadioIcon5">
+                                    <span class="custom-option-body">
+                                      <i class="ti ti-file-scissors"></i>
+                                      <span class="custom-option-title"> Pindah Arus </span>
+                                      <small> Pemilih yang terindikasi telah berpindah ke calon lain. </small>
+                                    </span>
+                                    <input
+                                      name="level_status_id"
+                                      class="form-check-input"
+                                      type="radio"
+                                      value="10"
+                                      id="customRadioIcon5"
+                                      @if($pemilih->level_status_id == 10)
+                                        checked
+                                      @endif
+                                    />
+                                  </label>
+                                </div>
+                              </div>
+                            
+                          </div>
                          
                           <div class="row g-3">
                            
-                            <div class="col-12 col-md-12 col-xxl-12">
-                                <div class="row">
-                                    <h5 class="my-4">4. Upload KTP</h5>
-                                    @error('ktp')
-                                    <div class="alert alert-danger d-flex align-items-center" role="alert">
-                                        <span class="alert-icon text-danger me-2">
-                                        <i class="ti ti-ban ti-xs"></i>
-                                        </span>
-                                        {{ $message }}
-                                    </div>   
-                                    @enderror
-                                    <div class="col-md-6">
-                                      <label for="formFile" class="form-label">Masukan foto KTP</label>
-                                      <div id="floatingInputHelp" class="form-text">
-                                        foto dengan benar
-                                      </div>
-                                      <input name="ktp" class="form-control ktp @error('foto') is-invalid @enderror" type="file" id="image" onchange="priviewImage()"/>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <br>
-                                        <img class="img-preview img-fluid">
-                                        <img id="preview"></img>
-                                    </div>
-                                </div>
-                              
-                            <hr>
-                            </div>
-
                             <div class="d-grid gap-2">
                                 <button type="submit" class="btn btn-label-primary" 
                                 id="auto-close"
                                 >
-                                    <span class="ti-xs ti ti-device-floppy me-1"></span>Lakukan Penjaringan
+                                    <span class="ti-xs ti ti-device-floppy me-1"></span>Update Penyaringan
                                 </button>
                             </div>
 

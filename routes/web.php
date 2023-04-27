@@ -84,8 +84,8 @@ Route::controller(PenjaringanController::class)->middleware('isAdminClient')->gr
 
 Route::controller(PenyaringanController::class)->middleware('isAdminClient')->group(function () {
     Route::get('/penyaringan', 'index');
-    Route::get('/penyaringan/edit/{dpt2020}', 'edit');
-    Route::post('/penyaringan', 'update');
+    Route::get('/penyaringan/{PemilihClient}/edit', 'edit');
+    Route::put('/penyaringan/{PemilihClient}', 'update');
 });
 
 

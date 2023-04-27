@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\PemilihClient;
 use App\Models\User;
 
 use Illuminate\Pagination\Paginator;
@@ -24,7 +25,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-
+       
         Paginator::useBootstrapFive();
 
         Gate::define('isSuperAdmin', function(User $user){
@@ -33,6 +34,18 @@ class AppServiceProvider extends ServiceProvider
 
         Gate::define('isAdminClient', function(User $user){
             return $user->level == 2;
+        });
+
+
+        Gate::define('profil', function () {
+            return request()->segment(2) == request()->session()->get('user_id');
+        });
+
+        Gate::define('penyaringan', function () {
+
+            $pemilihClient = PemilihClient::where('id',request()->segment(2))->first();
+            return $pemilihClient->client_id == request()->session()->get('client_id');
+
         });
 
     }

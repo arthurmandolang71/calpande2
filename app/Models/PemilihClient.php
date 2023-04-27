@@ -13,6 +13,7 @@ class PemilihClient extends Model
     protected $table = 'pemilih_client';
     protected $primaryKey = 'id';
     protected $guarded = ['id'];
+    protected $with = ['pemilih'];
     // protected $with = ['pemilih','client','referensi','level'];
 
     public function pemilih() 

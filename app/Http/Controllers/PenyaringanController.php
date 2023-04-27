@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Tps;
+use App\Models\Agama;
 use App\Models\Wilayah;
 use App\Models\Lingkungan;
 use Illuminate\Http\Request;
 use App\Models\PemilihClient;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
 
 class PenyaringanController extends Controller
 {
@@ -82,29 +84,35 @@ class PenyaringanController extends Controller
 
     }
 
-    public function edit(PemilihClient $PemilihClient)
-    {
-        $pemilih = PemilihClient::with('pemilih')->where('id',$PemilihClient->id)->first();
+    public function edit()
+    {   
+        Gate::authorize('penyaringan');
+
+        $pemilih = PemilihClient::with('user')->where('id',request()->segment(2))->first();
         
+        $agama = Agama::all();
         return view('dashboard.penyaringan.edit',[
+            'agama' => $agama,
             'pemilih' => $pemilih,
         ]);
 
     }
 
-    public function update(Request $request, PemilihClient $PemilihClient)
+    public function update(Request $request)
     {
-        $validasi = [
-            'catatan_tim' => ['catatan_tim'],
-            'catatan_koordinator' => ['required','min:9'],
-            'level_status_id' => ['required'],
+        Gate::authorize('penyaringan');
+
+        $update = [
+            'alamat' => $request->input('alamat'),
+            'no_hp' => $request->input('no_hp'),
+            'no_wa' => $request->input('no_wa'),
+            'catatan_koordinator' => $request->input('catatan_koordinator'),
+            'level_status_id' => $request->input('level_status_id'),
         ];
 
-        $request->validate($validasi);
- 
-        PemilihClient::where('id',$PemilihClient->id)->update($validasi);
+        PemilihClient::where('id',request()->segment(2))->update($update);
 
-        return redirect("/penyaringan/$PemilihClient->id")->with('pesan','data barhasil di update! silakan cek kembali');
+        return redirect("/penyaringan")->with('pesan','data penyaringan berhasil di update!');
     }
     //
 }

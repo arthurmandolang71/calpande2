@@ -31,6 +31,9 @@ class LoginController extends Controller
 
             if(auth()->user()->level == 2) {
                 $client_id = auth()->user()->anggota_tim->client_id;
+                $username = auth()->user()->username;
+                $user_id = auth()->user()->id;
+
                 $dapil = Dapil::where('dapil', auth()->user()->anggota_tim->client->dapil_ref)->get();
 
                 $kode_kec_dapil = [];
@@ -38,6 +41,8 @@ class LoginController extends Controller
                     array_push( $kode_kec_dapil, $item->kode_kec);
                 }
 
+                $request->session()->put('username', $username);
+                $request->session()->put('user_id', $user_id);
                 $request->session()->put('client_id', $client_id);
                 $request->session()->put('kode_kec_dapil', $kode_kec_dapil);
             }

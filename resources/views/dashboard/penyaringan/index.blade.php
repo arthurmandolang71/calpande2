@@ -79,6 +79,15 @@
         </div>
       </div>
     </div>
+
+    @if (session()->has('pesan'))
+      <div class="container text-center">
+        <div class="alert alert-success alert-dismissible" role="alert">
+          {{ session('pesan') }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      </div>
+    @endif
       
       <div class="table-responsive">
           <table class="datatables-basic table" 
@@ -91,7 +100,7 @@
                 <th>JK</th>
                 <th>Kelurahan</th>
                 <th>Ling.</th>               
-                <th>Actions</th>
+                <th>Klasifikasi</th>
               </tr>
             </thead>
             <tbody class="table-border-bottom-0">
@@ -104,18 +113,18 @@
                 <td>KELURAHAN {{ $item->pemilih->wilayah->nama }}</td>
                 <td>Ling. {{ $item->pemilih->rw }}</td>
                 <td> 
-                  @if($item->level->level == 1)
-                    <a href="/penyaringan/edit/{{ $item->id }}""> <span class="badge rounded-pill bg-secondary"> <i class="ti ti-question-mark me-2"></i> Penjaringan</span> </a>
-                  @elseif($item->level->level == 2)
-                    <a href="/penyaringan/edit/{{ $item->id }}""> <span class="badge rounded-pill bg-info"> <i class="ti ti-question-mark me-2"></i> Pengembira</span> </a>
-                  @elseif($item->level->level == 3)
-                    <a href="/penyaringan/edit/{{ $item->id }}""> <span class="badge rounded-pill bg-dark"> <i class="ti ti-question-mark me-2"></i> Pragmatis</span> </a>
-                  @elseif($item->level->level == 4)
-                    <a href="/penyaringan/edit/{{ $item->id }}""> <span class="badge rounded-pill bg-success"> <i class="ti ti-question-mark me-2"></i> Loyalis</span> </a>
-                  @elseif($item->level->level == 5)
-                    <a href="/penyaringan/edit/{{ $item->id }}""> <span class="badge rounded-pill bg-primary"> <i class="ti ti-question-mark me-2"></i> Militansi</span> </a>
+                  @if($item->level_status_id == 1)
+                    <a href="/penyaringan/{{ $item->id }}/edit""> <span class="badge rounded-pill bg-secondary"> <i class="ti ti-question-mark me-2"></i> Penjaringan</span> </a>
+                  @elseif($item->level_status_id == 2)
+                    <a href="/penyaringan/{{ $item->id }}/edit""> <span class="badge rounded-pill bg-info"> <i class="ti ti-send me-2"></i> Pengembira</span> </a>
+                  @elseif($item->level_status_id == 3)
+                    <a href="/penyaringan/{{ $item->id }}/edit""> <span class="badge rounded-pill bg-dark"> <i class="ti ti-currency-dollar me-2"></i> Pragmatis</span> </a>
+                  @elseif($item->level_status_id == 4)
+                    <a href="/penyaringan/{{ $item->id }}/edit""> <span class="badge rounded-pill bg-success"> <i class="ti ti-heart-plus me-2"></i> Loyalis</span> </a>
+                  @elseif($item->level_status_id == 5)
+                    <a href="/penyaringan/{{ $item->id }}/edit""> <span class="badge rounded-pill bg-primary"> <i class="ti ti-karate"></i> Militansi</span> </a>
                   @else
-                    <a href="/penyaringan/edit/{{ $item->id }}""> <span class="badge rounded-pill bg-danger"> <i class="ti ti-question-mark me-2"></i> Pindah Arus</span> </a>
+                    <a href="/penyaringan/{{ $item->id }}/edit""> <span class="badge rounded-pill bg-danger"> <i class="ti ti-file-scissors me-2"></i> Pindah Arus</span> </a>
                   @endif
                 </td>
               </tr>

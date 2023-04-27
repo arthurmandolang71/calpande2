@@ -23,8 +23,8 @@
                           <span class="align-middle"> Kembali</span>
                         </button></a>
 
-                        @if(isset($item->pemilih->pemilih_client->user->anggota_tim->client_id))
-                            @if($item->pemilih->pemilih_client->user->anggota_tim->client_id == request()->session()->get('client_id'))
+                        @if(isset($dpt->pemilih->pemilih_client->user->anggota_tim->client_id))
+                            @if($dpt->pemilih->pemilih_client->user->anggota_tim->client_id == request()->session()->get('client_id'))
                                 <button class="btn btn-success">Sudah terjaring</button>
                             @else
                                 <button class="btn btn-warning">Belum terjaring</button>
@@ -37,11 +37,11 @@
                       </div>
                     </div>
                 
-                 {{ $belum = NULL }}
-                 @if(isset($item->pemilih->pemilih_client->user->anggota_tim->client_id))
+                 {{ $belum = false }}
+                 @if(isset($dpt->pemilih->pemilih_client->user->anggota_tim->client_id))
 
-                    @if($item->pemilih->pemilih_client->user->anggota_tim->client_id == request()->session()->get('client_id'))
-                    
+                    @if($dpt->pemilih->pemilih_client->user->anggota_tim->client_id == request()->session()->get('client_id'))
+                        
                         <div class="alert alert-success alert-dismissible d-flex align-items-baseline" role="alert">
                             <span class="alert-icon alert-icon-lg text-success me-2">
                             <i class="ti ti-check ti-sm"></i>
@@ -54,11 +54,12 @@
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                             </div>
                         </div>
+
                     @else
-                        {{ $belum = 1 }}
+                        {{ $belum = true }}
                     @endif
                 @else
-                    {{ $belum = 1 }}
+                    {{ $belum = true }}
                 @endif
 
                 @if($belum)
