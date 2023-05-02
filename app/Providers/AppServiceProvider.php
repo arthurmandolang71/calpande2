@@ -36,6 +36,9 @@ class AppServiceProvider extends ServiceProvider
             return $user->level == 2;
         });
 
+        Gate::define('isTimClient', function(User $user){
+            return $user->level == 3;
+        });
 
         Gate::define('profil', function () {
             return request()->segment(2) == request()->session()->get('user_id');

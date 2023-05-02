@@ -29,7 +29,7 @@ class LoginController extends Controller
         if(Auth::attempt($cridentials)) {
             $request->session()->regenerate();
 
-            if(auth()->user()->level == 2) {
+            if(auth()->user()->level == 2 or auth()->user()->level == 3) {
                 $client_id = auth()->user()->anggota_tim->client_id;
                 $username = auth()->user()->username;
                 $user_id = auth()->user()->id;

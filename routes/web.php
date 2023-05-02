@@ -30,11 +30,19 @@ Route::redirect('/','/home');
 
 Route::redirect('/home','/welcome');
 
-Route::view('/welcome','dashboard.welcome', ['name' => 'caleg'])->middleware('auth');
+Route::view('/welcome','dashboard.welcome', [ 'name' => session()->get('username') ])->middleware('auth');
 
 // dashboard all
 Route::get('/dapil/dashboard', [DashboardController::class, 'dapil'])->middleware('isAdminClient');
 
+Route::controller(ProfilController::class)->middleware('auth')->group(function () {
+    Route::get('/profil/{user}', 'show');
+    Route::get('/profil/{user}/edit', 'edit');
+    Route::put('/profil/{user}', 'update');
+});
+
+
+// admin system
 Route::controller(LoginController::class)->group(function () {
     Route::get('/login', 'index')->middleware('guest')->name('login');
     Route::post('/login', 'auth');
@@ -56,13 +64,9 @@ Route::resource('/clients', ClientController::class)->except(['destroy'])->middl
 ]);
 
 
-Route::controller(ProfilController::class)->middleware('auth')->group(function () {
-    Route::get('/profil/{user}', 'show');
-    Route::get('/profil/{user}/edit', 'edit');
-    Route::put('/profil/{user}', 'update');
-});
 
 
+// admin client
 Route::put('/tim/update_status/{user}',[TimController::class, 'update_status'])->middleware('isAdminClient');
 Route::resource('/tim', TimController::class)->except(['destroy'])->middleware('isAdminClient')->parameters([
     'tim' => 'user',
@@ -86,6 +90,24 @@ Route::controller(PenyaringanController::class)->middleware('isAdminClient')->gr
     Route::get('/penyaringan', 'index');
     Route::get('/penyaringan/{PemilihClient}/edit', 'edit');
     Route::put('/penyaringan/{PemilihClient}', 'update');
+});
+
+
+// tim client
+
+Route::get('/timclient/lingkungan', [TimClientDashController::class, 'lingkungan'])->middleware('isTimClient');
+
+Route::controller(TimClientPenjaringanController::class)->middleware('isTimClient')->group(function () {
+    Route::get('/penjaringantim', 'index');
+    Route::post('/penjaringantim', 'store');
+    Route::get('/penjaringantim/create/{dpt2020}', 'create');
+    Route::get('/print/penjaringantim/', 'print');
+});
+
+Route::controller(TimClientPenyaringanController::class)->middleware('isTimClient')->group(function () {
+    Route::get('/penyaringantim', 'index');
+    Route::get('/penyaringantim/{PemilihClient}/edit', 'edit');
+    Route::put('/penyaringantim/{PemilihClient}', 'update');
 });
 
 

@@ -95,6 +95,35 @@
              
             @endcan
 
+            @can('isTimClient')
+            <!-- DPT -->
+            <li class="menu-header small text-uppercase">
+              <span class="menu-header-text">Penyisiran Pendukung</span>
+            </li>
+              <li class="menu-item {{ Request::is('penjaringan*') ? 'active' : '' }}">
+                <a href="/penjaringan" class="menu-link  ">
+                  <i class="menu-icon tf-icons ti ti-map-search"></i>
+                  <div data-i18n="Ploting Lingkungan">Ploting Lingkungan</div>
+                </a>
+              </li>
+              <li class="menu-item {{ Request::is('penjaringan*') ? 'active' : '' }}">
+                <a href="/penjaringan" class="menu-link  ">
+                  <i class="menu-icon tf-icons ti ti-map-search"></i>
+                  <div data-i18n="Penjaringan">Penjaringan</div>
+                </a>
+              </li>
+              <li class="menu-item {{ Request::is('penyaringan*') ? 'active' : '' }}">
+                <a href="/penyaringan" class="menu-link  ">
+                  <i class="menu-icon tf-icons ti ti-list-search"></i>
+                  <div data-i18n="Penyaringan">Penyaringan</div>
+                </a>
+              </li>
+
+           
+          @endcan
+
+
+
             </ul>
            
 
