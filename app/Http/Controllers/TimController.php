@@ -32,7 +32,7 @@ class TimController extends Controller
         $tim = AnggotaTim::with('user')
                     ->filter(request(['nama']))
                     ->calegTim()
-                    ->cursorPaginate(20)
+                    ->cursorPaginate(100)
                     ->withQueryString();
       
         return view('dashboard.tim.index',[
@@ -75,7 +75,7 @@ class TimController extends Controller
         ];
 
         if($request->file('foto')){
-            $validasi['foto'] = ['image', 'file', 'mimes:jpeg,png,jpg','max:1024'];
+            $validasi['foto'] = ['image', 'file', 'mimes:jpeg,png,jpg','max:5024'];
         }
 
         $validateData = $request->validate($validasi);
@@ -90,7 +90,11 @@ class TimController extends Controller
 
         // upload foto
         if($request->file('foto')){
-            $insert_user['foto'] = $request->file('foto')->store('user');
+            $file = $request->file('foto');
+            $path = Storage::put('user', $file);
+            Storage::setVisibility($path,'public');
+           
+            $insert_user['foto'] = Storage::url($path);
         } 
         
         $user_insert = User::create($insert_user);
@@ -172,10 +176,11 @@ class TimController extends Controller
         ]; 
 
         if($request->file('foto')){
-            if($user->foto) {
-                Storage::delete($user->foto);
-            }
-            $insert_user['image'] = $request->file('image')->store('post-image');
+            $file = $request->file('foto');
+            $path = Storage::put('user', $file);
+            Storage::setVisibility($path,'public');
+           
+            $insert_user['foto'] = Storage::url($path);
         }
         
         User::where('id',$user->id)->update($insert_user);

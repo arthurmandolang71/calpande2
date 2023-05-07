@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('dapil', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignId('kode_kec');
+            $table->string('kecamatan');
             $table->integer('dapil');
             $table->string('nama');
             $table->timestamps();

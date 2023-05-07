@@ -14,7 +14,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        DB::statement('SET SESSION sql_require_primary_key=0');
+        // DB::statement('SET SESSION sql_require_primary_key=0');
         
         Schema::create('users', function (Blueprint $table) {
             $table->uuid('id')->primary();

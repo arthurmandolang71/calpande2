@@ -29,6 +29,10 @@ class DatabaseSeeder extends Seeder
             'foto' => '',
         ]);
 
+
+
+
+
         Agama::create([
             'nama' => 'Islam'
         ]);
@@ -57,72 +61,89 @@ class DatabaseSeeder extends Seeder
             'nama' => 'Lainya'
         ]);
 
+
       
         Dapil::create([
             'kode_kec' => 717101,
+            'kecamatan' => 'BUNAKEN',
             'dapil' => 3,
             'nama' => 'KOTA MANADO 3'
         ]);
 
         Dapil::create([
             'kode_kec' => 717102,
+            'kecamatan' => 'TUMINITNG',
             'dapil' => 3,
             'nama' => 'KOTA MANADO 3'
         ]);
 
         Dapil::create([
             'kode_kec' => 717103,
+            'kecamatan' => 'SINGKIL',
             'dapil' => 4,
             'nama' => 'KOTA MANADO 4'
         ]);
 
         Dapil::create([
             'kode_kec' => 717104,
+            'kecamatan' => 'WENANG',
             'dapil' => 1,
             'nama' => 'KOTA MANADO 1'
         ]);
 
         Dapil::create([
             'kode_kec' => 717105,
+            'kecamatan' => 'TIKALA',
             'dapil' => 5,
             'nama' => 'KOTA MANADO 5'
         ]);
 
         Dapil::create([
             'kode_kec' => 717106,
+            'kecamatan' => 'SARIO',
             'dapil' => 2,
             'nama' => 'KOTA MANADO 2'
         ]);
 
         Dapil::create([
             'kode_kec' => 717107,
+            'kecamatan' => 'WANEA',
             'dapil' => 1,
             'nama' => 'KOTA MANADO 1'
         ]);
 
         Dapil::create([
             'kode_kec' => 717108,
+            'kecamatan' => 'MAPANGET',
             'dapil' => 4,
             'nama' => 'KOTA MANADO 4'
         ]);
 
         Dapil::create([
             'kode_kec' => 717109,
+            'kecamatan' => 'MALALAYANG',
             'dapil' => 2,
             'nama' => 'KOTA MANADO 2'
         ]);
 
         Dapil::create([
             'kode_kec' => 717110,
+            'kecamatan' => 'BUNAKEN KEPULAUAN',
             'dapil' => 3,
             'nama' => 'KOTA MANADO 3'
         ]);
 
         Dapil::create([
             'kode_kec' => 717111,
+            'kecamatan' => 'PAAL DUA',
             'dapil' => 5,
             'nama' => 'KOTA MANADO 5'
         ]);
+
+
+
+
+
 
         Kendaraan::create([
             'nama' => 'Partai Kebangkitan Bangsa',
@@ -224,6 +245,12 @@ class DatabaseSeeder extends Seeder
             'nama' => 'Partai Perindo',
             'nama_singkat' => 'Perindo',
             'logo' => 'Perindo.png'
+        ]);
+
+        Kendaraan::create([
+            'nama' => 'Partai Demo/Latihan',
+            'nama_singkat' => 'demo',
+            'logo' => 'demo.png'
         ]);
 
 

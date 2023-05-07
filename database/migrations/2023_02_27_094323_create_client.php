@@ -18,6 +18,9 @@ return new class extends Migration
             $table->integer('no_urut');
             $table->string('nama');
             $table->string('no_wa');
+            $table->string('banner_login');
+            $table->string('banner_welcome');
+            $table->string('domain');
             $table->string('keterangan');
             $table->timestamps();
         });

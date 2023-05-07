@@ -17,7 +17,6 @@ return new class extends Migration
             $table->foreignUuid('user_id');
             $table->foreignUuid('pemilih_id');
             $table->foreignUuid('level_status_id');
-            $table->foreignUuid('agama_id');
             $table->string('alamat')->nullable();
             //info kontak
             $table->string('no_hp')->nullable();

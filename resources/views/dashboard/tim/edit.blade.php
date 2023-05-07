@@ -252,7 +252,7 @@
                 <div class="col-md-6">
                     <br>
                     @if($tim->foto)
-                        <img src='{{ asset('storage/'. $tim->foto .'') }}' class="img-preview img-fluid d-block">
+                        <img src='{{ $tim->foto  }}' class="img-preview img-fluid d-block">
                     @else
                         <img  class="img-preview img-fluid">
                     @endif

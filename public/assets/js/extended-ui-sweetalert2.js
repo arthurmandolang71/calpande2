@@ -363,8 +363,11 @@
         title: 'Harap menungguh proses sedang berlangsung!',
         html: 'I will close in <strong></strong> seconds.',
         timer: 222000,
+        allowOutsideClick: false,
+        showCancelButton: false,
+        showConfirmButton: false,
         customClass: {
-          confirmButton: 'btn btn-primary'
+          // confirmButton: 'btn btn-primary'
         },
         buttonsStyling: false,
         willOpen: function () {

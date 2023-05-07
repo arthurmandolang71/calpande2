@@ -318,7 +318,7 @@
                 <div class="col-md-6">
                     <br>
                     @if($client->foto)
-                        <img src='{{ asset('storage/'. $client->foto .'') }}' class="img-preview img-fluid d-block">
+                        <img src='{{  $client->foto  }}' class="img-preview img-fluid d-block">
                     @else
                         <img  class="img-preview img-fluid">
                     @endif

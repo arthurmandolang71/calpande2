@@ -28,7 +28,7 @@
             <div class="flex-shrink-0 mt-n2 mx-sm-0 mx-auto">
               <img
                 @if ($tim->foto)
-                  src="{{ asset('storage/'. $tim->foto .'') }}" width="100" heignt="100"
+                  src="{{ $tim->foto }}" width="100" heignt="100"
                 @else
                   @if ($tim->anggota_tim->jenis_kelamin == 'L')
                     src="{{ asset('') }}assets/img/avatars/1.png"

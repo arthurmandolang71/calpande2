@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use App\Models\PemilihClient;
 use Illuminate\Support\Carbon;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image as ResizeImage;
 
 
@@ -127,23 +128,33 @@ class PenjaringanController extends Controller
 
         $pemilih = Pemilih::where('nik',$request->input('nik'))->first();
 
+        if($request->file('ktp')){
+
+            $file = $request->file('ktp');
+            $path = Storage::put('ktp', $file);
+            Storage::setVisibility($path,'public');
+           
+            $update['foto_ktp'] = Storage::url($path);
+
+        }
+
+        $dpt = Dpt2020::with('pemilih')->where('id', $request->input('id'))->get()->first();
+
         if(!$pemilih) {
 
-            if($request->file('ktp')){
-                $path = public_path('ktp/');
-                !is_dir($path) &&
-                    mkdir($path, 0777, true);
-    
-                $uuid = Str::uuid();
-                $name_ktp = $uuid . '.' . $request->ktp->extension();
-                ResizeImage::make($request->file('ktp'))
-                    ->resize(600, 400)
-                    ->save($path . $name_ktp);
-            } else {
-                $name_ktp = NULL;
-            }
+            // $dpt = Dpt2020::where('id',$request->input('id'))->get()->first();
+       
+            if(isset($dpt->pemilih->nik)){
+                $validateData['nik'] = $dpt->pemilih->nik;
+            } 
 
-            $dpt = Dpt2020::where('id',$request->input('id'))->get()->first();
+            if(isset($dpt->pemilih->nkk)){
+                $validateData['nkk'] = $dpt->pemilih->nkk;
+            } 
+
+            if(isset($dpt->pemilih->rw)){
+                $validateData['rw'] = $dpt->pemilih->rw;
+            } 
            
             $insert_pemilih = [
                 'dpt_id' => $dpt->id,
@@ -159,12 +170,16 @@ class PenjaringanController extends Controller
                 'alamat' => $dpt->alamat,
                 'rt' => $dpt->rt,
                 'rw' => $validateData['rw'],
-                'foto_ktp' => $name_ktp,
-                'wilayah_id' => $dpt->wilayah->id,  
+                'foto_ktp' => $update['foto_ktp'],
+                'wilayah_id' => $dpt->wilayah->id, 
+                'is_invalid' => $request->input('is_invalid'),  
             ];
     
             $pemilih = Pemilih::create($insert_pemilih);
-        } 
+        } else {
+            $update['is_invalid'] = $request->input('is_invalid');
+            Pemilih::where('id',$dpt->pemilih->id)->update($update);
+        }
     
         $insert_pemilih_client = [
             'client_id' => auth()->user()->anggota_tim->client_id,

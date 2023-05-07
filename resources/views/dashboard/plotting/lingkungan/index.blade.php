@@ -37,6 +37,21 @@
       <div class="container">
         <div class="row">
           <div class="col-md-4">
+            <label class="form-label" for="multicol-country">Anggota Tim</label>
+            <select id="anggota_tim_cari" class="select2 form-select" data-allow-clear="true">
+                @if($select_anggota_tim)
+                    <option value="{{ $select_anggota_tim['id'] }}" >{{ $select_anggota_tim['nama'] }}</option>
+                @else
+                    <option selected value="">Pilih Anggota Tim</option>
+                @endif
+                
+                @foreach ($anggota_tim as $item)
+                    <option value="{{ $item->id }}" >{{ $item->user->name }}</option>
+                @endforeach
+            </select>
+          <hr>
+          </div>
+          <div class="col-md-4">
             <label class="form-label" for="multicol-country">Kelurahan</label>
             <select id="kelurahan" class="select2 form-select" data-allow-clear="true">
                 @if($select_kelurahan)
@@ -67,21 +82,7 @@
             </select>
             <hr>
           </div>
-          <div class="col-md-4">
-            <label class="form-label" for="multicol-country">Anggota Tim</label>
-            <select id="anggota_tim_cari" class="select2 form-select" data-allow-clear="true">
-                @if($select_anggota_tim)
-                    <option value="{{ $select_anggota_tim['id'] }}" >{{ $select_anggota_tim['nama'] }}</option>
-                @else
-                    <option selected value="">Pilih Anggota Tim</option>
-                @endif
-                
-                @foreach ($anggota_tim as $item)
-                    <option value="{{ $item->id }}" >{{ $item->user->name }}</option>
-                @endforeach
-            </select>
-          <hr>
-          </div>
+         
           <div class="col-md-2">
             <br>
             <a href="/plotting_ling/tim"><button type="button" class="btn btn-primary"><i class="tf-icons ti ti-arrow-back"></i> Refresh</button></a>
@@ -118,7 +119,7 @@
               <td>{{ $item->wilayah->nama ?? ''}}</td>
               <td>{{ $item->lingkungan ?? ''}}</td>
               <td></td>
-              <td>{{ $item->anggota_tim->user->name ?? ''}}</td>
+              <td><a href="/tim/{{ $item->anggota_tim->user->id }}">{{ $item->anggota_tim->user->name ?? ''}}</a></td>
               <td>
                 <div class="dropdown">
                   <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">

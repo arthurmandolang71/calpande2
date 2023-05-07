@@ -50,7 +50,7 @@
          <div class="avatar avatar-online">
            <img 
               @if (auth()->user()->foto)
-                  src="{{ asset('storage') }}/{{ auth()->user()->foto }}"
+                  src="{{ auth()->user()->foto }}"
                 @else
                   @isset(auth()->user()->anggota_tim->jenis_kelamin)
                   @if (auth()->user()->anggota_tim->jenis_kelamin == 'L')
@@ -72,7 +72,7 @@
                    <img 
               
                      @if (auth()->user()->foto)
-                          src="{{ asset('storage') }}/{{ auth()->user()->foto }}"
+                          src="{{ auth()->user()->foto }}"
                         @else
                         @isset(auth()->user()->anggota_tim->jenis_kelamin)
                           @if (auth()->user()->anggota_tim->jenis_kelamin == 'L')

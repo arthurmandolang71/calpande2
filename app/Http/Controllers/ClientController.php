@@ -10,6 +10,7 @@ use App\Models\Kendaraan;
 use App\Models\AnggotaTim;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Contracts\Cache\Store;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
@@ -86,7 +87,13 @@ class ClientController extends Controller
 
         // upload foto
         if($request->file('foto')){
-            $insert_user['foto'] = $request->file('foto')->store('user');
+
+            $file = $request->file('foto');
+            $path = Storage::put('user', $file);
+            Storage::setVisibility($path,'public');
+           
+            $insert_user['foto'] = Storage::url($path);
+           
         } 
         
         $user_insert = User::create($insert_user);
@@ -123,9 +130,11 @@ class ClientController extends Controller
     {
         
         $dapil = $user->anggota_tim->client->dapil->dapil;
-    
+
         $kecamatan = Dapil::where('dapil',$dapil)->get();
 
+        // dd($kecamatan);
+    
         return view('dashboard.client.show',[
             'client' => $user,
             'kecamatan' => $kecamatan,
@@ -168,7 +177,7 @@ class ClientController extends Controller
         ];
 
         if($request->file('foto')){
-            $validasi['foto'] = ['image', 'file', 'mimes:jpeg,png,jpg','max:1024'];
+            $validasi['foto'] = ['image', 'file', 'mimes:jpeg,png,jpg','max:7024'];
         }
 
         if($request->password){
@@ -188,10 +197,13 @@ class ClientController extends Controller
         ]; 
 
         if($request->file('foto')){
-            if($user->foto) {
-                Storage::delete($user->foto);
-            }
-            $insert_user['foto'] = $request->file('foto')->store('user');
+           
+            $file = $request->file('foto');
+            $path = Storage::put('user', $file);
+            Storage::setVisibility($path,'public');
+           
+            $insert_user['foto'] = Storage::url($path);
+            
         }
         
         User::where('id',$user->id)->update($insert_user);
@@ -226,8 +238,6 @@ class ClientController extends Controller
     public function update_status(Request $request, User $user)
     {
         $update = ['active' => $request->acitve];
-
-        // User::whereHas('anggota_tim.client_id', $user->anggota_tim->client_id)->update($update);
        
         User::where('id',$user->id)->update($update);
         

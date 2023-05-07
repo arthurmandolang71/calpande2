@@ -28,7 +28,7 @@
             <div class="flex-shrink-0 mt-n2 mx-sm-0 mx-auto">
               <img
                 @if ($client->foto)
-                  src="{{ asset('storage/'. $client->foto .'') }}" width="100" heignt="100"
+                  src="{{ $client->foto }}" width="100" heignt="100"
                 @else
                   @if ($client->anggota_tim->jenis_kelamin == 'L')
                     src="{{ asset('') }}assets/img/avatars/1.png"
@@ -129,16 +129,16 @@
             </ul> 
             <ul class="list-unstyled mb-4 mt-3">
               <li class="d-flex align-items-center mb-3">
-                <i class="ti ti-ad-2"></i><span class="fw-bold mx-2">Keterangan:</span> <span>{{ $client->anggota_tim->keterangan }}</span>
-              </li>
-            </ul>    
-            <ul class="list-unstyled mb-4 mt-3">
-              <li class="d-flex align-items-center mb-3">
                 <i class="ti ti-building-bridge-2"></i><span class="fw-bold mx-2">Kecamatan:</span> <span>
                   @foreach ($kecamatan as $item)
-                        KECAMATAN {{ $item->wilayah->nama }},  
+                        KECAMATAN {{ $item->kecamatan }},  
                   @endforeach
                 </span>
+              </li>
+            </ul>  
+            <ul class="list-unstyled mb-4 mt-3">
+              <li class="d-flex align-items-center mb-3">
+                <i class="ti ti-ad-2"></i><span class="fw-bold mx-2">Keterangan:</span> <span>{{ $client->anggota_tim->keterangan }}</span>
               </li>
             </ul>          
           </div>
