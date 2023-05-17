@@ -53,8 +53,14 @@
               <li class="menu-header small text-uppercase">
                 <span class="menu-header-text">Master Data</span>
               </li>
-                  <li class="menu-item {{ Request::is('dapil/dashboard*') ? 'active' : '' }}">
-                    <a href="/dapil/dashboard" class="menu-link  ">
+                  <li class="menu-item {{ Request::is('client_dash/insight*') ? 'active' : '' }}">
+                    <a href="/client_dash/insight" class="menu-link  ">
+                      <i class="menu-icon tf-icons ti ti-chart-bar"></i>
+                      <div data-i18n="Insight">Insight</div>
+                    </a>
+                  </li>
+                  <li class="menu-item {{ Request::is('client_dash/dashboard*') ? 'active' : '' }}">
+                    <a href="/client_dash/dashboard" class="menu-link  ">
                       <i class="menu-icon tf-icons ti ti-chart-bar"></i>
                       <div data-i18n="Dashboard">Dashboard</div>
                     </a>

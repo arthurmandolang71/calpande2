@@ -11,7 +11,22 @@ class LoginController extends Controller
 {
     public function index()
     {
-        return view('auth.login');
+        // return $_SERVER['SERVER_NAME'];
+        // $domain = "smk2.jpg";
+
+        $domain = NULL;
+
+        if($domain){
+            $domain = "smk2.jpg";
+        } else {
+            $domain = "smk3.jpg";
+        }
+
+        return view('auth.login',
+            [
+                'domain' => $domain 
+            ]
+        );
     }
 
     public function auth(Request $request)

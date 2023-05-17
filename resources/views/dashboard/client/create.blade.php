@@ -22,6 +22,17 @@
           </div>
         </div>
       @endif
+
+
+      @if ($errors->any())
+          <div class="alert alert-danger">
+              <ul>
+                  @foreach ($errors->all() as $error)
+                      <li>{{ $error }}</li>
+                  @endforeach
+              </ul>
+          </div>
+      @endif
       <!-- start content -->
       <form action="/clients" method="post" enctype="multipart/form-data">
         @csrf
@@ -110,6 +121,31 @@
                     Masukan password minimal 6 karakter
                 </div>
             </div>
+
+            @error('domain')
+                <div class="alert alert-danger d-flex align-items-center" role="alert">
+                    <span class="alert-icon text-danger me-2">
+                    <i class="ti ti-ban ti-xs"></i>
+                    </span>
+                    {{ $message }}
+                </div>   
+              @enderror
+              <div class="form-floating">
+                  <input
+                    type="text"
+                    name="domain"
+                    class="form-control @error('username') is-invalid @enderror"
+                    id="floatingInput"
+                    placeholder="Masukan domain"
+                    aria-describedby="floatingInputHelp"
+                    value="{{ old('domain') }}"
+                    
+                  />
+                  <label for="floatingInput">domain</label>
+                  <div id="floatingInputHelp" class="form-text">
+                      Masukan domain 
+                  </div>
+              </div>
 
             @error('no_wa')
               <div class="alert alert-danger d-flex align-items-center" role="alert">
@@ -318,8 +354,51 @@
                     <br>
                     <img  class="img-preview img-fluid">
                 </div>
-            
             </div>
+
+            @error('banner_login')
+            <div class="alert alert-danger d-flex align-items-center" role="alert">
+                <span class="alert-icon text-danger me-2">
+                <i class="ti ti-ban ti-xs"></i>
+                </span>
+                {{ $message }}
+            </div>   
+            @enderror
+            <div class="row">
+                <div class="col-md-6">
+                  <label for="formFile" class="form-label">Masukan banner login</label>
+                  <div id="floatingInputHelp" class="form-text">
+                    banner login dengan benar
+                  </div>
+                  <input name="banner_login" class="form-control @error('banner_login') is-invalid @enderror" type="file" />
+                </div>
+                <div class="col-md-6">
+                    <br>
+                    {{-- <img  class="img-preview img-fluid"> --}}
+                </div>
+            </div>
+
+          @error('banner_welcome')
+          <div class="alert alert-danger d-flex align-items-center" role="alert">
+              <span class="alert-icon text-danger me-2">
+              <i class="ti ti-ban ti-xs"></i>
+              </span>
+              {{ $message }}
+          </div>   
+          @enderror
+          <div class="row">
+              <div class="col-md-6">
+                <label for="formFile" class="form-label">Masukan Banner Welcome</label>
+                <div id="floatingInputHelp" class="form-text">
+                  masukan banner welcome dengan benar
+                </div>
+                <input name="banner_welcome" class="form-control @error('banner_welcome') is-invalid @enderror" type="file" />
+              </div>
+              <div class="col-md-6">
+                  <br>
+                  {{-- <img  class="img-preview img-fluid"> --}}
+              </div>
+          </div>
             <hr>
 
             <div class="d-grid gap-2">

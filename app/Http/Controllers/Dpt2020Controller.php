@@ -74,6 +74,8 @@ class Dpt2020Controller extends Controller
                 $pecah = explode("#",$hapus_petik);
             }
 
+            // dd($pecah);
+
             // skip datat tidak lengkap
             if(!isset($pecah[4])){
                 // dd($pecah);
@@ -93,14 +95,13 @@ class Dpt2020Controller extends Controller
                 $tanggal_baru = NULL;
             }  
             //clear tps
-            if(isset($pecah[15])){
-                $hapus_nol_satu_tps = Str::replaceArray('00', [''], $pecah[15]);
+            if(isset($pecah[12])){
+                $hapus_nol_satu_tps = Str::replaceArray('00', [''], $pecah[12]);
                 $tps_clear_nol =  Str::replaceArray('0', [''], $hapus_nol_satu_tps);
             } else {
                 $tps_clear_nol = 0;
             }
             
-
             // clear rw
             if(isset($pecah[10])){
                 $hapus_nol_satu_rw = Str::replaceArray('00', [''], $pecah[10]);
@@ -128,9 +129,9 @@ class Dpt2020Controller extends Controller
                 'rt'			=>	$pecah[9] ?? 0,
                 'rw'			=>	$rw_clear_nol,
                 'difabel'		=>	$pecah[11] ?? 0,
-                'ektp'	=>	$pecah[12] ?? 0,
-                'keterangan'	=>	$pecah[13] ?? 0,
-                'sumberdata'	=>	$pecah[14] ?? 0,
+                // 'ektp'	=>	$pecah[12] ?? 0,
+                // 'keterangan'	=>	$pecah[13] ?? 0,
+                // 'sumberdata'	=>	$pecah[14] ?? 0,
                 'tps'	=>	$tps_clear_nol,
                 'wilayah_id'	=>	$request->wilayah_id,
             );
@@ -142,6 +143,8 @@ class Dpt2020Controller extends Controller
         $collection_pemilih = new Collection($pemilih);
         // dd($collection_pemilih->count());
         $total_pemilih_kelurahan = $collection_pemilih->count();
+
+        Wilayah::where('id',$request->wilayah_id)->update(['jumlah' => $total_pemilih_kelurahan ]);
 
         // insert tabel tps
         $total_tps = $collection_pemilih->max('tps');
@@ -175,7 +178,16 @@ class Dpt2020Controller extends Controller
             // Dpt2020::insert($item);
         }
 
-        return redirect('/dpt2020')->with('pesan','data bashasil di upload');        
+        $get_kelurahan =  Wilayah::where('id', $request->wilayah_id)->first();
+
+        $total_kecamatan_sementara = Dpt2020::with('wilayah')->whereHas('wilayah', fn($query) => 
+            $query->where('kode_kec', $get_kelurahan->kode_kec)       
+        )->count(); 
+
+        Wilayah::where('kode_kec',$get_kelurahan->kode_kec)->where('level_wilayah',3)->update(['jumlah' => $total_kecamatan_sementara ]);
+
+        return redirect('/dpt2020')->with('pesan','data bashasil di upload');
+
     }
 
     public function pemilih()

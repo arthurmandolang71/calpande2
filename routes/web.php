@@ -6,7 +6,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\Dpt2020Controller;
-use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DashboardClientController;
 use App\Http\Controllers\PenjaringanController;
 use App\Http\Controllers\PenyaringanController;
 use App\Http\Controllers\TimLingkunganController;
@@ -33,7 +33,8 @@ Route::redirect('/home','/welcome');
 Route::view('/welcome','dashboard.welcome', [ 'name' => session()->get('username') ])->middleware('auth');
 
 // dashboard all
-Route::get('/dapil/dashboard', [DashboardController::class, 'dapil'])->middleware('isAdminClient');
+Route::get('/client_dash/insight', [DashboardClientController::class, 'insight'])->middleware('isAdminClient');
+Route::get('/client_dash/dashboard', [DashboardClientController::class, 'dapil'])->middleware('isAdminClient');
 
 Route::controller(ProfilController::class)->middleware('auth')->group(function () {
     Route::get('/profil/{user}', 'show');

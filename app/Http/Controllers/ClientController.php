@@ -63,6 +63,7 @@ class ClientController extends Controller
             'password' => ['required', 'min:6'],
             'no_wa' => ['required','min:9'],
             'alamat' => ['required'],
+            'domain' => ['required'],
             'dapil_ref' => ['required'],
             'kendaraan_id' => ['required'],
             'no_urut' => ['required'],
@@ -72,7 +73,7 @@ class ClientController extends Controller
         ];
 
         if($request->file('foto')){
-            $validasi['foto'] = ['image', 'file', 'mimes:jpeg,png,jpg','max:1024'];
+            $validasi['foto'] = ['image', 'file', 'mimes:jpeg,png,jpg','max:5024'];
         }
 
         $validateData = $request->validate($validasi);
@@ -87,16 +88,29 @@ class ClientController extends Controller
 
         // upload foto
         if($request->file('foto')){
-
             $file = $request->file('foto');
             $path = Storage::put('user', $file);
             Storage::setVisibility($path,'public');
-           
             $insert_user['foto'] = Storage::url($path);
-           
         } 
         
         $user_insert = User::create($insert_user);
+
+         // banner login
+         if($request->file('banner_login')){
+            $file = $request->file('banner_login');
+            $path = Storage::putFileAs('banner_login', $file, $request->domain.'_login.jpg');
+            Storage::setVisibility($path,'public');
+            $banner_login = Storage::url($path); 
+        } 
+
+         // banner welcome
+         if($request->file('banner_welcome')){
+            $file = $request->file('banner_welcome');
+            $path = Storage::putFileAs('banner_welcome', $file, $request->domain.'_welcome.jpg');
+            Storage::setVisibility($path,'public');
+            $banner_welcome = Storage::url($path);
+        } 
 
         $insert_client = [
             'dapil_ref' => $validateData['dapil_ref'],
@@ -104,6 +118,9 @@ class ClientController extends Controller
             'no_urut' => $validateData['no_urut'],
             'nama' => $validateData['name'],
             'no_wa' => $validateData['no_wa'],
+            'domain' => $validateData['domain'],
+            'banner_login' => $banner_login,
+            'banner_welcome' => $banner_welcome,
             'keterangan' => $validateData['keterangan']
         ]; $client_insert = Client::create($insert_client);
 
@@ -149,13 +166,15 @@ class ClientController extends Controller
         $dapil = Dapil::distinct()->orderBy('dapil', 'asc')->get(['dapil','nama']);
         $kendaraan = Kendaraan::all();
         $agama = Agama::all();
+        $client_user = User::with('anggota_tim.client')->where('id',$user->id)->first();
+        // dd($client_user);
 
         return view('dashboard.client.edit',[
             'dapil' => $dapil,
             'kendaraan' => $kendaraan,
             'agama' => $agama,
             'jenis_kelamin' => ['L','P'],
-            'client' => $user
+            'client' =>  $client_user
         ]);
     }
 
@@ -168,6 +187,7 @@ class ClientController extends Controller
             'name' => ['required'],
             'no_wa' => ['required','min:9'],
             'alamat' => ['required'],
+            'domain' => ['required'],
             'dapil_ref' => ['required'],
             'kendaraan_id' => ['required'],
             'no_urut' => ['required'],
@@ -178,6 +198,14 @@ class ClientController extends Controller
 
         if($request->file('foto')){
             $validasi['foto'] = ['image', 'file', 'mimes:jpeg,png,jpg','max:7024'];
+        }
+
+        if($request->file('banner_login')){
+            $validasi['banner_login'] = ['image', 'file', 'mimes:jpeg,png,jpg','max:7024'];
+        }
+
+        if($request->file('banner_welcome')){
+            $validasi['banner_welcome'] = ['image', 'file', 'mimes:jpeg,png,jpg','max:7024'];
         }
 
         if($request->password){
@@ -197,22 +225,44 @@ class ClientController extends Controller
         ]; 
 
         if($request->file('foto')){
-           
             $file = $request->file('foto');
             $path = Storage::put('user', $file);
             Storage::setVisibility($path,'public');
-           
             $insert_user['foto'] = Storage::url($path);
-            
         }
         
         User::where('id',$user->id)->update($insert_user);
+
+        $client_user = User::with('anggota_tim.client')->where('id',$user->id)->first();
+       
+         // banner login
+         if($request->file('banner_login')){
+            $file = $request->file('banner_login');
+            $path = Storage::putFileAs('banner_login', $file, $request->domain.'_login.jpg');
+            Storage::setVisibility($path,'public');
+            $banner_login = Storage::url($path); 
+        } else {
+            $banner_login = $client_user->anggota_tim->client->banner_login ;
+        }
+
+         // banner welcome
+         if($request->file('banner_welcome')){
+            $file = $request->file('banner_welcome');
+            $path = Storage::putFileAs('banner_welcome', $file, $request->domain.'_welcome.jpg');
+            Storage::setVisibility($path,'public');
+            $banner_welcome = Storage::url($path);
+        } else {
+            $banner_welcome = $client_user->anggota_tim->client->banner_welcome ;
+        }
 
         $insert_client = [
             'dapil_ref' => $request->dapil_ref,
             'kendaraan_id' => $request->kendaraan_id,
             'no_urut' => $request->no_urut,
             'nama' => $request->name,
+            'domain' => $request->domain,
+            'banner_login' => $banner_login,
+            'banner_welcome' => $banner_welcome,
             'no_wa' => $request->no_wa,
             'keterangan' => $request->keterangan
         ];

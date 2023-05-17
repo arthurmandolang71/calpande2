@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Facade;
 
+$base_url    = 'http://'.$_SERVER['HTTP_HOST'].'/';
+
 return [
 
     /*
@@ -54,9 +56,13 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    // 'url' => env('APP_URL', 'http://localhost'),
 
-    'asset_url' => env('ASSET_URL'),
+    'url' => $base_url,
+
+    // 'asset_url' => env('ASSET_URL'),
+
+    'asset_url' => $base_url,
 
     /*
     |--------------------------------------------------------------------------

@@ -14,9 +14,9 @@
     <div class="card">
       <h5 class="card-header">Edit Client</h5> <!-- title -->
 
-      {{-- @foreach ($errors->all() as $error)
+      @foreach ($errors->all() as $error)
             <li>{{ $error }}</li>
-      @endforeach --}}
+      @endforeach
 
       @if (session()->has('pesan'))
         <div class="container">
@@ -88,6 +88,31 @@
                 <label for="floatingInput">Username</label>
                 <div id="floatingInputHelp" class="form-text">
                     Masukan username minimal 6 karakter
+                </div>
+            </div>
+
+            @error('domain')
+            <div class="alert alert-danger d-flex align-items-center" role="alert">
+                <span class="alert-icon text-danger me-2">
+                <i class="ti ti-ban ti-xs"></i>
+                </span>
+                {{ $message }}
+            </div>   
+            @enderror
+            <div class="form-floating">
+                <input
+                type="text"
+                name="domain"
+                class="form-control @error('domain') is-invalid @enderror"
+                id="floatingInput"
+                placeholder="Masukan domain"
+                aria-describedby="floatingInputHelp"
+                value="{{ old('domain', $client->anggota_tim->client->domain) }}"
+                required
+                />
+                <label for="floatingInput">Domain</label>
+                <div id="floatingInputHelp" class="form-text">
+                    Masukan domain
                 </div>
             </div>
 
@@ -331,8 +356,54 @@
                 @enderror
             </div>
 
-            <hr>
+            @error('banner_login')
+            <div class="alert alert-danger d-flex align-items-center" role="alert">
+                <span class="alert-icon text-danger me-2">
+                <i class="ti ti-ban ti-xs"></i>
+                </span>
+                {{ $message }}
+            </div>   
+            @enderror
+            <div class="row">
+                <div class="col-md-6">
+                <label for="formFile" class="form-label">Masukan banner login</label>
+                <input name="banner_login" class="form-control" type="file" />
+                </div>
+                <div class="col-md-6">
+                    <br>
+                    <img src='{{ $client->anggota_tim->client->banner_login }}' class="img-preview img-fluid d-block">        
+                </div>
+                @error('banner_login')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
 
+        @error('banner_welcome')
+        <div class="alert alert-danger d-flex align-items-center" role="alert">
+            <span class="alert-icon text-danger me-2">
+            <i class="ti ti-ban ti-xs"></i>
+            </span>
+            {{ $message }}
+        </div>   
+        @enderror
+        <div class="row">
+            <div class="col-md-6">
+            <label for="formFile" class="form-label">Masukan banner welcome</label>
+            <input name="banner_welcome" class="form-control" type="file" />
+            </div>
+            <div class="col-md-6">
+                <br>
+                <img src='{{  $client->anggota_tim->client->banner_welcome  }}' class="img-preview img-fluid d-block">
+            </div>
+            @error('banner_welcome')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+            @enderror
+        </div>
+            <hr>
             <div class="d-grid gap-2">
                 <button type="submit" class="btn btn-label-success" id="auto-close">
                     <span class="ti-xs ti ti-device-floppy me-1"></span>Simpan

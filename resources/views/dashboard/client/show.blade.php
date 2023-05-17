@@ -76,6 +76,7 @@
     <!-- User Profile Content -->
     <div class="row">
       <div class="col-xl-12 col-lg-12 col-md-12">
+       
         <!-- About User -->
         <div class="card mb-4">
           <div class="card-body">
@@ -144,7 +145,11 @@
           </div>
         </div>
         <!--/ About User -->
-       
+
+        <img src='{{ $client->anggota_tim->client->banner_login }}' class="img-preview img-fluid d-block">   
+        <hr>     
+        <img src='{{ $client->anggota_tim->client->banner_welcome }}' class="img-preview img-fluid d-block">      
+        <br><br>
       </div>
 
       

@@ -65,22 +65,11 @@
               </div>
               <div class="col-md-2 col-6">
                 <div class="d-flex align-items-center">
-                  <div class="badge rounded-pill bg-label-danger me-3 p-2">
-                    <i class="ti ti-home ti-sm"></i>
-                  </div>
-                  <div class="card-info">
-                    <h5 class="mb-0">{{ $total_lingkungan }}</h5>
-                    <small>Lingkungan</small>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-2 col-6">
-                <div class="d-flex align-items-center">
                   <div class="badge rounded-pill bg-label-success me-3 p-2">
                     <i class="ti ti-flag ti-sm"></i>
                   </div>
                   <div class="card-info">
-                    <h5 class="mb-0">-</h5>
+                    <h5 class="mb-0">{{ $total_tps }}</h5>
                     <small>TPS</small>
                   </div>
                 </div>
@@ -120,17 +109,17 @@
           <div class="card-body">
             <ul class="p-0 m-0">
              
-                @foreach ($kelurahan as $kelurahan => $total)   
+                @foreach ($kelurahan as $item)   
                 <li class="d-flex mb-3 pb-1 align-items-center">
                     <div class="badge bg-label-success rounded me-3 p-2">
                         <i class="ti ti-home ti-sm"></i>
                     </div>
                     <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
                         <div class="me-2">
-                            <h6 class="mb-0">{{ $kelurahan }}</h6>
+                            <h6 class="mb-0">{{ $item->nama }}</h6>
                         </div>
                             <div class="user-progress d-flex align-items-center gap-1">
-                            <h6 class="mb-0 text-success">+{{ $total }} </h6>
+                            <h6 class="mb-0 text-success">+{{ $item->jumlah }} </h6>
                         </div>
                     </div>
                 </li>
@@ -153,11 +142,11 @@
                     </div>
                     <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
                         <div class="me-2">
-                            <h6 class="mb-0">{{ $item['kecamatan'] }}</h6>
+                            <h6 class="mb-0">{{ $item->nama }}</h6>
                           
                         </div>
                             <div class="user-progress d-flex align-items-center gap-1">
-                            <h6 class="mb-0 text-success">+{{ $item['total'] }}</h6>
+                            <h6 class="mb-0 text-success">+{{ $item->jumlah  }}</h6>
                         </div>
                     </div>
                 </li>
@@ -175,24 +164,24 @@
       <div class="col-lg-8">
         <div class="card h-100">
           <br>
-          <h5 class="m-0 me-2 container">Lingkungan</h5>
+          <h5 class="m-0 me-2 container">TPS</h5>
           <div class="table-responsive card-datatable">
             <table class="datatables-basic table" id="lingkungan_tabel">
               <thead>
                 <tr>
                   <th>No.</th>
                   <th>Kelurahan</th>
-                  <th>Lingkungan</th>
+                  <th>TPS</th>
                   <th>Suara</th>
                 </tr>
               </thead>
               <tbody>
-              @foreach ($lingkungan as $item)
+              @foreach ($tps as $item)
                 <tr>
                   <th>{{ $loop->iteration }}</th>
                   <th>{{ $item->wilayah->nama }}</th>
                   <th>{{ $item->nama  }}</th>
-                  <th class="mb-0 text-success"><a target="_blank" href="/penjaringan?kelurahan={{ $item->wilayah->id }}&lingkungan={{ $item->nama  }}">+{{ $item->total_pemilih_lingkungan }}</a></th>
+                  <th class="mb-0 text-success"><a target="_blank" href="/penjaringan?kelurahan={{ $item->wilayah->id }}&tps={{ $item->nama  }}">+{{ $item->total_pemilih_tps }}</a></th>
                 </tr>
               @endforeach
               </tbody>

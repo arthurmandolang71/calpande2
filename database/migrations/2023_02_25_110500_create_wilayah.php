@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('kode_kel');
             $table->string('zona_waktu');
             $table->string('flag_hide');
+            $table->string('jumlah')->nullable();
             $table->string('kode_wilayah');
             $table->timestamps();
         });

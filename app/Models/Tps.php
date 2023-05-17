@@ -32,5 +32,13 @@ class Tps extends Model
 
     }
 
+    public function scopeDapil($query)
+    {
+        $kec_dapil = session()->get('kode_kec_dapil');
+        $query->whereHas('wilayah', fn($query) => 
+            $query->whereIn('kode_kec', $kec_dapil)       
+        ); 
+    }
+
 
 }
