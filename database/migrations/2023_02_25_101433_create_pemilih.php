@@ -16,11 +16,11 @@ return new class extends Migration
             $table->string('dpt_id')->nullable();
             $table->string('dpt_id_string')->nullable();
             $table->foreignUuid('agama_id');
-            $table->string('nkk');
+            $table->string('nkk')->nullable();
             $table->string('nik');
             $table->string('nama');
-            $table->string('tempat_lahir');
-            $table->string('tanggal_lahir');
+            $table->string('tempat_lahir')->nullable();
+            $table->string('tanggal_lahir')->nullable();
             $table->string('kawin')->nullable();
             $table->string('jenis_kelamin')->nullable();
             $table->string('alamat')->nullable();
@@ -29,7 +29,7 @@ return new class extends Migration
             $table->string('foto_ktp')->nullable();
             $table->string('tps')->nullable();
             $table->string('wilayah_id');
-            $table->string('is_invalid')->integer()->default('0');
+            $table->string('is_invalid')->integer()->default('0')->nullable();
             $table->timestamps();
         });
     }

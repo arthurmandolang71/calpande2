@@ -59,12 +59,12 @@
                       <div data-i18n="Insight">Insight</div>
                     </a>
                   </li>
-                  <li class="menu-item {{ Request::is('client_dash/dashboard*') ? 'active' : '' }}">
+                  {{-- <li class="menu-item {{ Request::is('client_dash/dashboard*') ? 'active' : '' }}">
                     <a href="/client_dash/dashboard" class="menu-link  ">
                       <i class="menu-icon tf-icons ti ti-chart-bar"></i>
                       <div data-i18n="Dashboard">Dashboard</div>
                     </a>
-                  </li>
+                  </li> --}}
             
               <li class="menu-header small text-uppercase">
                 <span class="menu-header-text">Tim Kemenangan</span>
@@ -75,10 +75,16 @@
                     <div data-i18n="Anggota Tim">Anggota Tim</div>
                   </a>
                 </li>
-                <li class="menu-item {{ Request::is('plotting_ling/tim*') ? 'active' : '' }}">
+                {{-- <li class="menu-item {{ Request::is('plotting_ling/tim*') ? 'active' : '' }}">
                   <a href="/plotting_ling/tim" class="menu-link  ">
                     <i class="menu-icon tf-icons ti ti-pennant"></i>
-                    <div data-i18n="Plotting Tim / Ling.">Plotting Tim / Ling.</div>
+                    <div data-i18n="Plotting Tim / TPS.">Plotting Tim / Ling.</div>
+                  </a>
+                </li> --}}
+                <li class="menu-item {{ Request::is('plotting_tps/tim*') ? 'active' : '' }}">
+                  <a href="/plotting_tps/tim" class="menu-link  ">
+                    <i class="menu-icon tf-icons ti ti-pennant"></i>
+                    <div data-i18n="Plotting Tim / TPS.">Plotting Tim / TPS.</div>
                   </a>
                 </li>
 

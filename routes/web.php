@@ -5,11 +5,12 @@ use App\Http\Controllers\TimController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ProfilController;
+use App\Http\Controllers\TimTpsController;
 use App\Http\Controllers\Dpt2020Controller;
-use App\Http\Controllers\DashboardClientController;
 use App\Http\Controllers\PenjaringanController;
 use App\Http\Controllers\PenyaringanController;
 use App\Http\Controllers\TimLingkunganController;
+use App\Http\Controllers\DashboardClientController;
 
 /*
 |--------------------------------------------------------------------------
@@ -73,12 +74,20 @@ Route::resource('/tim', TimController::class)->except(['destroy'])->middleware('
     'tim' => 'user',
 ]);
 
-Route::controller(TimLingkunganController::class)->middleware('isAdminClient')->group(function () {
-    Route::get('/plotting_ling/tim', 'index');
-    Route::post('/plotting_ling/tim', 'store');
-    Route::delete('/plotting_ling/tim/{lokasianggotalingkungan}', 'destroy');
-    Route::get('/get_lingkungan/tim/{id}', 'getLingkungan');
+// Route::controller(TimLingkunganController::class)->middleware('isAdminClient')->group(function () {
+//     Route::get('/plotting_ling/tim', 'index');
+//     Route::post('/plotting_ling/tim', 'store');
+//     Route::delete('/plotting_ling/tim/{lokasianggotalingkungan}', 'destroy');
+//     Route::get('/get_lingkungan/tim/{id}', 'getLingkungan');
+// });
+
+Route::controller(TimTpsController::class)->middleware('isAdminClient')->group(function () {
+    Route::get('/plotting_tps/tim', 'index');
+    Route::post('/plotting_tps/tim', 'store');
+    Route::delete('/plotting_tps/tim/{lokasianggotatps}', 'destroy');
+    Route::get('/get_tps/tim/{id}', 'getTps');
 });
+
 
 Route::controller(PenjaringanController::class)->middleware('isAdminClient')->group(function () {
     Route::get('/penjaringan', 'index');

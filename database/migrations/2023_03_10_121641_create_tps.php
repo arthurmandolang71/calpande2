@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('tps', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignId('wilayah_id');
-            $table->string('nama');
+            $table->integer('nama');
             $table->integer('total_pemilih_tps');
             $table->integer('total_pemilih_kelurahan');
             $table->timestamps();

@@ -459,7 +459,7 @@
                           <div class="row g-3">
                             <div class="col-md">
                               <div class="form-check custom-option custom-option-icon">
-                                <label class="form-check-label custom-option-content" for="customRadioIcon3">
+                                <label class="form-check-label custom-option-content" for="customRadioIcon4">
                                   <span class="custom-option-body">
                                     <i class="ti ti-heart-plus"></i>
                                     <span class="custom-option-title"> Loyalis </span>
@@ -470,7 +470,7 @@
                                     class="form-check-input"
                                     type="radio"
                                     value="4"
-                                    id="customRadioIcon3"
+                                    id="customRadioIcon4"
                                     @if($pemilih->level_status_id == 4)
                                       checked
                                     @endif
@@ -480,7 +480,7 @@
                             </div>
                             <div class="col-md">
                                 <div class="form-check custom-option custom-option-icon">
-                                  <label class="form-check-label custom-option-content" for="customRadioIcon4">
+                                  <label class="form-check-label custom-option-content" for="customRadioIcon5">
                                     <span class="custom-option-body">
                                       <i class="ti ti-karate"></i>
                                       <span class="custom-option-title"> Militansi </span>
@@ -491,7 +491,7 @@
                                       class="form-check-input"
                                       type="radio"
                                       value="5"
-                                      id="customRadioIcon4"
+                                      id="customRadioIcon5"
                                       @if($pemilih->level_status_id == 5)
                                         checked
                                       @endif
@@ -501,7 +501,7 @@
                               </div>
                               <div class="col-md">
                                 <div class="form-check custom-option custom-option-icon">
-                                  <label class="form-check-label custom-option-content" for="customRadioIcon5">
+                                  <label class="form-check-label custom-option-content" for="customRadioIcon6">
                                     <span class="custom-option-body">
                                       <i class="ti ti-file-scissors"></i>
                                       <span class="custom-option-title"> Pindah Arus </span>
@@ -512,7 +512,7 @@
                                       class="form-check-input"
                                       type="radio"
                                       value="10"
-                                      id="customRadioIcon5"
+                                      id="customRadioIcon6"
                                       @if($pemilih->level_status_id == 10)
                                         checked
                                       @endif

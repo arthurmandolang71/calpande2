@@ -111,11 +111,11 @@ class PenjaringanController extends Controller
        
         $validasi = [
             'nik' => ['required','digits:16','numeric'],
-            'nkk' => ['required','digits:16','numeric'],
+            // 'nkk' => ['required','digits:16','numeric'],
             'alamat' => ['required'],
             'no_hp' => ['required','numeric','min:9'],
             'agama_id' => ['required'],
-            'rw' => ['required','numeric'],
+            // 'rw' => ['required','numeric'],
             'catatan_koordinator' => ['required'],
             // 'ktp' => ['required','image', 'file', 'mimes:jpeg,png,jpg','max:5024']
         ];
@@ -127,16 +127,6 @@ class PenjaringanController extends Controller
         $validateData = $request->validate($validasi);
 
         $pemilih = Pemilih::where('nik',$request->input('nik'))->first();
-
-        if($request->file('ktp')){
-
-            $file = $request->file('ktp');
-            $path = Storage::put('ktp', $file);
-            Storage::setVisibility($path,'public');
-           
-            $update['foto_ktp'] = Storage::url($path);
-
-        }
 
         $dpt = Dpt2020::with('pemilih')->where('id', $request->input('id'))->get()->first();
 
@@ -152,30 +142,40 @@ class PenjaringanController extends Controller
                 $validateData['nkk'] = $dpt->pemilih->nkk;
             } 
 
-            if(isset($dpt->pemilih->rw)){
-                $validateData['rw'] = $dpt->pemilih->rw;
-            } 
+            // if(isset($dpt->pemilih->rw)){
+            //     $validateData['rw'] = $dpt->pemilih->rw;
+            // } 
            
             $insert_pemilih = [
                 'dpt_id' => $dpt->id,
                 'dpt_id_string' => $dpt->string_id,
                 'agama_id' => $validateData['agama_id'],
-                'nkk' => $validateData['nkk'],
+                'nkk' => $dpt->nkk,
                 'nik' => $validateData['nik'],
                 'nama' => $dpt->nama,
                 'tempat_lahir' => $dpt->tempat_lahir,
-                'tanggal_lahir' => $dpt->tanggal_lahir,
+                'tanggal_lahir' => $request->input('tanggal_lahir'),
                 'kawin' => $dpt->kawin,
                 'jenis_kelamin' => $dpt->jenis_kelamin,
                 'alamat' => $dpt->alamat,
                 'rt' => $dpt->rt,
-                'rw' => $validateData['rw'],
-                'foto_ktp' => $update['foto_ktp'],
+                'rw' => $dpt->rw,
+                // 'foto_ktp' => $update['foto_ktp'],
+                'tps' => $dpt->tps,
                 'wilayah_id' => $dpt->wilayah->id, 
                 'is_invalid' => $request->input('is_invalid'),  
             ];
+
+            if($request->file('ktp')){
+
+                $file = $request->file('ktp');
+                $path = Storage::put('ktp', $file);
+                Storage::setVisibility($path,'public');
+                $insert_pemilih['foto_ktp'] = Storage::url($path);
+            }
     
             $pemilih = Pemilih::create($insert_pemilih);
+
         } else {
             $update['is_invalid'] = $request->input('is_invalid');
             Pemilih::where('id',$dpt->pemilih->id)->update($update);

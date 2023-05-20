@@ -41,7 +41,7 @@
           </div>
           <div class="card-body">
             <div class="row gy-3">
-              <div class="col-md-2 col-6">
+              <div class="col-md-3 col-6">
                 <div class="d-flex align-items-center">
                   <div class="badge rounded-pill bg-label-primary me-3 p-2">
                     <i class="ti ti-box ti-sm"></i>
@@ -52,7 +52,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-md-2 col-6">
+              <div class="col-md-3 col-6">
                 <div class="d-flex align-items-center">
                   <div class="badge rounded-pill bg-label-info me-3 p-2">
                     <i class="ti ti-box-model ti-sm"></i>
@@ -63,7 +63,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-md-2 col-6">
+              <div class="col-md-3 col-6">
                 <div class="d-flex align-items-center">
                   <div class="badge rounded-pill bg-label-success me-3 p-2">
                     <i class="ti ti-flag ti-sm"></i>
@@ -74,7 +74,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-md-2 col-6">
+              <div class="col-md-3 col-6">
                 <div class="d-flex align-items-center">
                   <div class="badge rounded-pill bg-label-success me-3 p-2">
                     <i class="ti ti-users ti-sm"></i>

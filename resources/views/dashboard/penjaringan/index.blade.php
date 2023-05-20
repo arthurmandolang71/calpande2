@@ -39,7 +39,7 @@
           </select>
           <hr>
         </div>
-        <div class="col-md-2">
+        {{-- <div class="col-md-2">
             <label class="form-label" for="multicol-country">Lingkungan</label>
             <select id="lingkungan" class="select2 form-select" data-allow-clear="true">
                 @if($select_lingkungan)
@@ -54,8 +54,8 @@
           </select>
             </select>
             <hr>
-        </div>
-        {{-- <div class="col-md-2">
+        </div> --}}
+        <div class="col-md-2">
             <label class="form-label" for="multicol-country">Tps</label>
             <select id="tps" class="select2 form-select" data-allow-clear="true">
               @if($select_tps)
@@ -69,8 +69,9 @@
               @endforeach
             </select>
             <hr>
-        </div> --}}
-        <input type="hidden" id="tps" value="">
+        </div>
+        
+        <input type="hidden" id="lingkungan" value="">
 
         <div class="col-md-3">
             <label class="form-label" for="multicol-country">Cari Nama Depan + Marga</label>
@@ -97,10 +98,10 @@
             <thead>
               <tr>
                 <th>Nama</th>
-                <th>TTL</th>
+                {{-- <th>TTL</th> --}}
                 <th>JK</th>
                 <th>Kelurahan</th>
-                <th>Ling.</th>
+                <th>TPS.</th>
                 {{-- <th>Tps</th> --}}
                 <th>Actions</th>
               </tr>
@@ -110,10 +111,10 @@
             @foreach ($dpt as $item)
               <tr>
                 <td>{{ $item->nama }}</td>
-                <td>{{ $item->tempat_lahir }}, {{ $item->tanggal_lahir }}</td>
+                {{-- <td>{{ $item->tempat_lahir }}, {{ $item->tanggal_lahir }}</td> --}}
                 <td>{{ $item->jenis_kelamin }}</td>
                 <td>KELURAHAN {{ $item->wilayah->nama }}</td>
-                <td>Ling. {{ $item->rw }}</td>
+                <td>Ling. {{ $item->tps }}</td>
                 {{-- <td>TPS {{ $item->tps }}</td> --}}
                 <td> 
                   @if(isset($item->pemilih->pemilih_client->user->anggota_tim->client_id))

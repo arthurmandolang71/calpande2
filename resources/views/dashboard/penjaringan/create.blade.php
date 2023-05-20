@@ -111,43 +111,6 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
-                                <div class="form-floating">
-                                    <input
-                                        type="text"
-                                        name="tempat_lahir"
-                                        class="form-control is-valid"
-                                        id="floatingInput"
-                                        placeholder="Masukan nama lengkap"
-                                        aria-describedby="floatingInputHelp"
-                                        value="{{ $dpt->tempat_lahir }}"
-                                        disabled
-                                    />
-                                    <label for="floatingInput">Tempat Lahir</label>
-                                    <div id="floatingInputHelp" class="form-text">
-                                        Tempat Lahir Pemilih
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="form-floating">
-                                    <input
-                                        type="text"
-                                        name="tanggal_lahir"
-                                        class="form-control is-valid"
-                                        id="floatingInput"
-                                        placeholder="Masukan nama lengkap"
-                                        aria-describedby="floatingInputHelp"
-                                        value="{{ $dpt->tanggal_lahir }}"
-                                        disabled
-                                    />
-                                    <label for="floatingInput">Tanggal Lahir</label>
-                                    <div id="floatingInputHelp" class="form-text">
-                                        Tanggal Lahir Pemilih
-                                    </div>
-                                </div>
-                            </div>
                            
                             <div class="col-12">
                               <label class="form-label" for="address">Alamat KTP</label>
@@ -181,52 +144,24 @@
                                 </div>
                             </div>
                             
-                            @if(isset($dpt->pemilih->rw))
-
-                                <div class="col-md-6">
-                                    <div class="form-floating">
-                                        <input
-                                            type="text"
-                                            name="rw"
-                                            class="form-control is-valid"
-                                            id="floatingInput"
-                                            placeholder="Masukan nama lengkap"
-                                            aria-describedby="floatingInputHelp"
-                                            value="{{ $dpt->pemilih->rw }}"
-                                            readonly
-                                        />
-                                        <label for="floatingInput">RW / Lingkugan</label>
-                                        <div id="floatingInputHelp" class="form-text">
-                                            RW / Lingkugan
-                                        </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input
+                                        type="text"
+                                        name="rw"
+                                        class="form-control is-valid"
+                                        id="floatingInput"
+                                        placeholder="Masukan nama lingkungan"
+                                        aria-describedby="floatingInputHelp"
+                                        value="0{{ $dpt->rw }}"
+                                        disabled
+                                    />
+                                    <label for="floatingInput">RW / Lingkugan</label>
+                                    <div id="floatingInputHelp" class="form-text">
+                                        RW / Lingkugan
                                     </div>
                                 </div>
-
-                            @else
-
-                                <div class="col-md-6">
-                                    <div class="form-floating">
-                                        <input
-                                            type="text"
-                                            name="rw"
-                                            class="form-control"
-                                            id="floatingInput"
-                                            placeholder="Masukan nama lingkungan"
-                                            aria-describedby="floatingInputHelp"
-                                            value="0{{ $dpt->rw }}"
-                                            
-                                        />
-                                        <label for="floatingInput">RW / Lingkugan</label>
-                                        <div id="floatingInputHelp" class="form-text">
-                                            RW / Lingkugan
-                                        </div>
-                                    </div>
-                                </div>
-
-                            @endif
-
-                            
-
+                            </div>
 
                             <div class="col-md-6">
                                 <div class="form-floating">
@@ -266,8 +201,68 @@
                                 </div>
                             </div>
 
-                            @if(isset($dpt->pemilih->nik))
+
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input
+                                        type="text"
+                                        name="tempat_lahir"
+                                        class="form-control is-valid"
+                                        id="floatingInput"
+                                        placeholder="Masukan nama lengkap"
+                                        aria-describedby="floatingInputHelp"
+                                        value="{{ $dpt->tempat_lahir }}"
+                                        disabled
+                                    />
+                                    <label for="floatingInput">Tempat Lahir</label>
+                                    <div id="floatingInputHelp" class="form-text">
+                                        Tempat Lahir Pemilih
+                                    </div>
+                                </div>
+                            </div>
+
+                            @if(isset($dpt->pemilih->tanggal_lahir))
                                 <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input
+                                            type="text"
+                                            name="tanggal_lahir"
+                                            class="form-control is-valid"
+                                            id="floatingInput"
+                                            placeholder="Masukan nama lengkap"
+                                            aria-describedby="floatingInputHelp"
+                                            value="{{ $dpt->tanggal_lahir }}"
+                                            disabled
+                                        />
+                                        <label for="floatingInput">Tanggal Lahir</label>
+                                        <div id="floatingInputHelp" class="form-text">
+                                            Tanggal Lahir Pemilih
+                                        </div>
+                                    </div>
+                                </div>
+                            @else
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input
+                                            type="text"
+                                            name="tanggal_lahir"
+                                            class="form-control"
+                                            id="floatingInput"
+                                            placeholder="Masukan tanggal lahir"
+                                            aria-describedby="floatingInputHelp"
+                                            value="{{ old('tanggal_lahir', $dpt->tanggal_lahir) }}"
+                                        />
+                                        <label for="floatingInput">Tanggal Lahir</label>
+                                        <div id="floatingInputHelp" class="form-text">
+                                            Tanggal Lahir Pemilih
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+
+
+                            @if(isset($dpt->pemilih->nik))
+                                <div class="col-md-12">
                                     @error('nik')
                                     <div class="alert alert-danger d-flex align-items-center" role="alert">
                                         <span class="alert-icon text-danger me-2">
@@ -296,7 +291,7 @@
 
                             @else
 
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     @error('nik')
                                     <div class="alert alert-danger d-flex align-items-center" role="alert">
                                         <span class="alert-icon text-danger me-2">
@@ -324,7 +319,7 @@
 
                             @endif
 
-                            @if(isset($dpt->pemilih->nkk))
+                            {{-- @if(isset($dpt->pemilih->nkk))
 
                                 <div class="col-md-6">
                                     @error('nkk')
@@ -381,7 +376,7 @@
                                     </div>
                                 </div>
 
-                            @endif
+                            @endif --}}
 
                             @if(isset($dpt->pemilih->agama_id))
                                 <div class="mt-2 mb-3">
@@ -471,7 +466,7 @@
                                   <br>
                                   <div class="form-check">
                                     <input name="is_invalid" class="form-check-input" type="checkbox" value="1" id="disabledCheck1"  />
-                                    <label class="form-check-label" for="disabledCheck1"> DATA TIDAK VALID MAKA SAYA LAMPIRKAN KTP </label>
+                                    <label class="form-check-label" for="disabledCheck1"> DATA KURANG TEPAT MAKA SAYA LAMPIRKAN KTP </label>
                                   </div>
 
                                 </div>

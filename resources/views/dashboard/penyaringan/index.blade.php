@@ -31,7 +31,7 @@
           </select>
           <hr>
         </div>
-        <div class="col-md-2">
+        {{-- <div class="col-md-2">
             <label class="form-label" for="multicol-country">Lingkungan</label>
             <select id="lingkungan" class="select2 form-select" data-allow-clear="true">
                 @if($select_lingkungan)
@@ -43,11 +43,10 @@
                 @foreach ($list_lingkungan as $item)
                     <option value="{{ $item->nama }}" >{{ $item->nama }}</option>
                 @endforeach
-          </select>
-            </select>
+          </select> 
             <hr>
-        </div>
-        {{-- <div class="col-md-2">
+        </div> --}}
+        <div class="col-md-2">
             <label class="form-label" for="multicol-country">Tps</label>
             <select id="tps" class="select2 form-select" data-allow-clear="true">
               @if($select_tps)
@@ -61,8 +60,8 @@
               @endforeach
             </select>
             <hr>
-        </div> --}}
-        <input type="hidden" id="tps" value="">
+        </div>
+        <input type="hidden" id="lingkungan" value="">
 
         <div class="col-md-3">
             <label class="form-label" for="multicol-country">Cari Nama Depan + Marga</label>
@@ -99,7 +98,7 @@
                 <th>TTL</th>
                 <th>JK</th>
                 <th>Kelurahan</th>
-                <th>Ling.</th>               
+                <th>TPS</th>               
                 <th>Klasifikasi</th>
               </tr>
             </thead>
@@ -111,7 +110,7 @@
                 <td>{{ $item->pemilih->tempat_lahir }}, {{ $item->pemilih->tanggal_lahir }}</td>
                 <td>{{ $item->pemilih->jenis_kelamin }}</td>
                 <td>KELURAHAN {{ $item->pemilih->wilayah->nama }}</td>
-                <td>Ling. {{ $item->pemilih->rw }}</td>
+                <td>TPS {{ $item->pemilih->tps }}</td>
                 <td> 
                   @if($item->level_status_id == 1)
                     <a href="/penyaringan/{{ $item->id }}/edit""> <span class="badge rounded-pill bg-secondary"> <i class="ti ti-question-mark me-2"></i> Penjaringan</span> </a>
