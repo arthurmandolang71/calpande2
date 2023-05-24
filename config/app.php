@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Facade;
 
-$base_url    = 'https://'.$_SERVER['HTTP_HOST'].'/';
+$base_url    = 'http://'.$_SERVER['HTTP_HOST'].'/';
 
 return [
 
