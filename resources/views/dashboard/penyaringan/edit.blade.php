@@ -4,7 +4,15 @@
 
 <link rel="stylesheet" href="{{ asset('') }}assets/vendor/libs/animate-css/animate.css" />
 <link rel="stylesheet" href="{{ asset('') }}assets/vendor/libs/sweetalert2/sweetalert2.css" />
- 
+
+<script type="text/javascript" src='https://maps.google.com/maps/api/js?sensor=false&libraries=places'></script>
+<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+
+<script src="{{ asset('') }}assets/js/locationpicker.jquery.min.js"></script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBk7maZZbWS4I3odR82HiAUoJDuGbzi-iw&callback=myMap"></script>
+
  <!-- Content -->
     <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Penyaringan /</span> Form Penyaringan</h4> <!-- title -->
@@ -522,9 +530,38 @@
                               </div>
                             
                           </div>
+
+                          {{-- mapp --}}
+
+                          <div class="form-horizontal" style="width: 550px">
+                            <div class="form-group">
+                              <label class="col-sm-2 control-label">Location:</label>
+                  
+                              <div class="col-sm-10">
+                                  <input type="text" class="form-control" id="us3-address" value="manado"/>
+                              </div>
+                            </div>
+                            {{-- mao --}}
+                            <div id="us3" style="width: 550px; height: 400px;"></div>
+
+                            <div class="clearfix">&nbsp;</div>
+                           
+                            <input type="hidden" class="form-control" style="width: 110px" id="us3-lat" />
+                            <input type="hidden" class="form-control" style="width: 110px" id="us3-lon" />
+                                   
+                          </div>
+
+                          <div class="clearfix"></div>
+                         
+                        </div>
+
+                          {{-- mapp --}}
+
+
                          
                           <div class="row g-3">
-                           
+
+                         
                             <div class="d-grid gap-2">
                                 <button type="submit" class="btn btn-label-primary" 
                                 id="auto-close"
@@ -535,6 +572,7 @@
 
                         </form>
 
+                 
                           </div>
                         </div>
                       </div>
@@ -580,6 +618,57 @@
             view.src = oFREvent.target.result;
         }
     }
+
+</script>
+ 
+<script>
+// let lat = 0;
+// let lng = 0;
+
+if ("geolocation" in navigator) {
+
+  navigator.geolocation.getCurrentPosition(
+
+    (position) => {
+
+      $('#us3').locationpicker({
+          location: {
+              latitude: position.coords.latitude,
+              longitude: position.coords.longitude
+          },
+          radius: 10,
+          inputBinding: {
+              latitudeInput: $('#us3-lat'),
+              longitudeInput: $('#us3-lon'),
+              radiusInput: $('#us3-radius'),
+              locationNameInput: $('#us3-address'),
+          },
+          onchanged: function (currentLocation, radius, isMarkerDropped) {
+              var addressComponents = $(this).locationpicker('map').location.addressComponents;
+              addressUpdated(addressComponents);
+          },
+          oninitialized: function(component) {
+              var addressComponents = $(component).locationpicker('map').location.addressComponents;
+              addressUpdated(addressComponents);
+          }
+      });
+
+    
+
+    },
+   
+    (error) => {
+      console.error("Error getting user location:", error);
+    }
+  );
+} else {
+  // Geolocation is not supported by the browser
+  console.error("Geolocation is not supported by this browser.");
+}
+
+
+
+
 
 </script>
 
