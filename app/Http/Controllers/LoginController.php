@@ -12,7 +12,7 @@ class LoginController extends Controller
     public function index()
     {
        
-        $domain = $_SERVER['SERVER_NAME'];
+        $domain = $_SERVER['HTTP_HOST'];
         // $domain = "inditekno2.com";
      
         return view('auth.login',
