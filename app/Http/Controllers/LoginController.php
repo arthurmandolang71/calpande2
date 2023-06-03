@@ -11,17 +11,10 @@ class LoginController extends Controller
 {
     public function index()
     {
-        // return $_SERVER['SERVER_NAME'];
-        // $domain = "smk2.jpg";
-
-        $domain = NULL;
-
-        if($domain){
-            $domain = "smk2.jpg";
-        } else {
-            $domain = "smk3.jpg";
-        }
-
+       
+        $domain = $_SERVER['SERVER_NAME'];
+        // $domain = "inditekno2.com";
+     
         return view('auth.login',
             [
                 'domain' => $domain 
@@ -48,6 +41,7 @@ class LoginController extends Controller
                 $client_id = auth()->user()->anggota_tim->client_id;
                 $username = auth()->user()->username;
                 $user_id = auth()->user()->id;
+                $anggota_tim_id = auth()->user()->anggota_tim->id;
 
                 $dapil = Dapil::where('dapil', auth()->user()->anggota_tim->client->dapil_ref)->get();
 
@@ -59,6 +53,7 @@ class LoginController extends Controller
                 $request->session()->put('username', $username);
                 $request->session()->put('user_id', $user_id);
                 $request->session()->put('client_id', $client_id);
+                $request->session()->put('anggota_tim_id', $anggota_tim_id);
                 $request->session()->put('kode_kec_dapil', $kode_kec_dapil);
             }
             

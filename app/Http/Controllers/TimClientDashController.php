@@ -2,23 +2,41 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Models\LokasiAnggotaLingkungan;
 use Illuminate\Http\Request;
+use App\Models\LokasiAnggotaTps;
+use Illuminate\Support\Collection;
+use App\Http\Controllers\Controller;
 
 class TimClientDashController extends Controller
 {
     
-    public function lingkungan()
+    public function index()
     {
-        $user_id = session()->get('user_id');
-        dd($user_id);
-        $tim = LokasiAnggotaLingkungan::with('user')
-            ->whereHas('anggota_tim', fn($query) =>  $query->where('user_id', $user_id) );  
+
+        $anggota_tim_id = session()->get('anggota_tim_id');
+
+        $tps_chunk = collect();
+       
+        LokasiAnggotaTps::with('wilayah')
+                                ->where('anggota_tim_id',$anggota_tim_id)
+                                ->chunk(3, function($LokasiAnggotaTps) use ($tps_chunk){
+                                    foreach($LokasiAnggotaTps as $item){
+                                        $tps_chunk->push([
+                                                'kelurahan' => $item->wilayah->nama,
+                                                'tps' => $item->tps
+                                            ]);
+                                        }
+                                });
+
+        dd($tps_chunk);
       
-        return view('dashboard.tim.index',[
-            'plotting' => $tim,
+        return view('dashboard.timclient.dashboard.dashboard',[
+            'total_kelurahan' => 1,
+            'total_tps' => 1,
+            'total_pemilih' => 1,
+            'tps' => $tps_chunk,
         ]);
+
     }
 
 }

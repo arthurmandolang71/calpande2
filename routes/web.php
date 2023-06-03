@@ -9,6 +9,8 @@ use App\Http\Controllers\TimTpsController;
 use App\Http\Controllers\Dpt2020Controller;
 use App\Http\Controllers\PenjaringanController;
 use App\Http\Controllers\PenyaringanController;
+use App\Http\Controllers\TimClientTpsController;
+use App\Http\Controllers\TimClientDashController;
 use App\Http\Controllers\TimLingkunganController;
 use App\Http\Controllers\DashboardClientController;
 
@@ -104,8 +106,7 @@ Route::controller(PenyaringanController::class)->middleware('isAdminClient')->gr
 
 
 // tim client
-
-Route::get('/timclient/lingkungan', [TimClientDashController::class, 'lingkungan'])->middleware('isTimClient');
+Route::get('/tim_dash/dashboard', [TimClientDashController::class, 'index'])->middleware('isTimClient');
 
 Route::controller(TimClientPenjaringanController::class)->middleware('isTimClient')->group(function () {
     Route::get('/penjaringantim', 'index');

@@ -88,7 +88,7 @@
             /> --}}
 
             <img
-              src="{{ asset('') }}assets/img/banner_login/{{ $domain }}" width="680" height="528"
+              src="https://calpande24.sgp1.digitaloceanspaces.com/calpande24/banner_login/{{ $domain }}_login.jpg" width="680" height="528"
              />
              
           </div>

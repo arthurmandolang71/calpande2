@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\IsTimClient;
 use App\Http\Middleware\IsSuperAdmin;
 use App\Http\Middleware\IsAdminClient;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
@@ -67,5 +68,6 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'isSuperAdmin' => IsSuperAdmin::class,
         'isAdminClient' => IsAdminClient::class,
+        'isTimClient' => IsTimClient::class,
     ];
 }

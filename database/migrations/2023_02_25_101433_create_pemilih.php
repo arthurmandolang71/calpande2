@@ -28,6 +28,8 @@ return new class extends Migration
             $table->string('rw')->nullable();
             $table->string('foto_ktp')->nullable();
             $table->string('tps')->nullable();
+            $table->string('long')->nullable();
+            $table->string('lati')->nullable();
             $table->string('wilayah_id');
             $table->string('is_invalid')->integer()->default('0')->nullable();
             $table->timestamps();
